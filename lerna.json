@@ -1,0 +1,12 @@
+{
+  "version": "0.0.0",
+  "npmClient": "pnpm",
+  "command": {
+    "bootstrap": {
+      "hoist": true
+    }
+  },
+  "packages": [
+    "packages/*"
+  ]
+}
