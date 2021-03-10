@@ -1,10 +1,26 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import router from "./router";
-import store from "./store";
+import 'element-plus/lib/theme-chalk/index.css'
+// import 'element-plus/packages/theme-chalk/src/index.scss'
+// import '@/assets/scss/element-ui.scss'
 
-createApp(App)
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+
+import locale from 'element-plus/lib/locale'
+import lang from 'element-plus/lib/locale/lang/zh-cn'
+import 'dayjs/locale/zh-cn'
+
+import App from './App.vue'
+import './registerServiceWorker'
+import router from './router'
+import store from './store'
+
+locale.use(lang)
+
+const app = createApp(App)
+
+app
   .use(store)
   .use(router)
-  .mount("#app");
+  .use(ElementPlus, { locale: lang, size: 'small', zIndex: 20210310 })
+
+app.mount('#app')

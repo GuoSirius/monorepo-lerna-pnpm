@@ -3,7 +3,7 @@
   "npmClient": "pnpm",
   "command": {
     "bootstrap": {
-      "hoist": true
+      "hoist": false
     }
   },
   "packages": [

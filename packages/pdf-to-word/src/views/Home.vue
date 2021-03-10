@@ -1,18 +1,83 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <el-button @click="startTransform">开始转换</el-button>
+
+    <el-upload
+      class="upload-demo"
+      drag
+      multiple
+      thumbnail-mode
+      :file-list="fileLists"
+      :auto-upload="false"
+      :on-change="changeHandler"
+      :on-preview="previewHandler"
+      :on-remove="removehandler"
+    >
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+      <template #tip>
+        <div class="el-upload__tip">jpg/png/pdf files</div>
+      </template>
+    </el-upload>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { defineComponent, ref } from 'vue'
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld
+import * as demo from 'pdfjs-dist'
+import * as tesseract from 'tesseract.js'
+
+import parsePDFDocument from '@/service/pdfjs'
+import scheduler from '@/service/tesseract'
+import { readFileAsArrayBuffer } from '@/service/tesseract-ocr'
+
+export default defineComponent({
+  name: 'Home',
+  setup() {
+    const message = ref('hellp')
+    const fileLists = ref([])
+
+    window.demo = demo
+    window.tesseract = tesseract
+
+    return { message, fileLists }
+  },
+  methods: {
+    changeHandler(file, fileLists) {
+      this.fileLists = fileLists
+
+      readFileAsArrayBuffer(file.raw).then(result => {
+        return parsePDFDocument(result.result)
+      }).then(result => {
+        return Promise.all(result.map(({ canvas }) => {
+          return new Promise(resolve => {
+            // canvas.toBlob(result => resolve(result), 'image/jpeg', 0.8)
+            resolve(canvas.toDataURL("image/jpeg", 1.0))
+          })
+        }))
+      }).then(result => {
+        console.log(result)
+        return Promise.all(result.map(blob => {
+          return scheduler.addJob('recognize', blob)
+        }))
+      }).then(result => {
+        console.log(result, scheduler)
+      })
+    },
+    previewHandler() {
+      // console.log('previewHandler', arguments)
+    },
+    removehandler() {
+      console.log('removehandler', arguments)
+    },
+    startTransform() {
+      const { fileLists } = this
+
+      if (!fileLists.length) return void this.$message.warning('请选择文件')
+
+      // TODO
+    }
   }
-};
+})
 </script>
