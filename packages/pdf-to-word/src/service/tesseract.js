@@ -13,7 +13,7 @@ export default scheduler
 export async function createWorkerFactory() {
   const worker = createWorker({
     workerPath: '/tesseract/worker.min.js',
-    langPath: '/tesseract/lang',
+    langPath: '/tesseract/lang/',
     corePath: '/tesseract/tesseract-core.wasm.js'
   })
 
