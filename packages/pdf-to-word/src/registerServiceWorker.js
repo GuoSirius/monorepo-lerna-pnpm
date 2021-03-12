@@ -2,7 +2,9 @@
 
 import { register } from "register-service-worker";
 
-if (process.env.NODE_ENV === "production") {
+const useServiceWorker = false
+
+if (process.env.NODE_ENV === "production" && useServiceWorker) {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
       console.log(

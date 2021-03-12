@@ -20,6 +20,7 @@ export async function createWorkerFactory() {
   await worker.load()
   await worker.loadLanguage('eng+chi_sim')
   await worker.initialize('eng+chi_sim')
+  await worker.setParameters({})
 
   return worker
 }

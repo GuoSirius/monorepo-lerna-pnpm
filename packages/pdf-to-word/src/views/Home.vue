@@ -64,7 +64,7 @@ export default defineComponent({
         return Promise.all(result.map(blob => scheduler.addJob('recognize', blob)))
       }).then(result => {
         console.log('result', result, scheduler)
-      }).then(() => {
+      }).finally(() => {
         loading.close()
       })
     },
