@@ -250,7 +250,7 @@
         <use xlink:href="#arrowCircle" x="165" y="550"></use>
         <use xlink:href="#arrowCircle" x="285" y="550"></use>
         <use xlink:href="#arrowCircle" x="435" y="180"></use>
-        <use xlink:href="#arrowCircle" x="795" y="180"></use>
+        <use xlink:href="#arrowCircle" x="795" y="188" transform-origin="814 197" transform="rotate(180)"></use>
         <!-- 圆和箭头 end -->
 
         <!-- 实操开关 start -->
