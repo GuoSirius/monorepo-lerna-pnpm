@@ -208,12 +208,57 @@
 
         <rect x="810" y="680" width="180" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
 
-        <rect x="60" y="860" width="1050" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
+        <rect x="60" y="860" width="1050" :height="PIPE_WIDTH" fill="url(#hPipe)">
+          <animate
+            id="right"
+            attributeType="XML"
+            attributeName="x"
+            begin="0; left.end"
+            from="60"
+            to="800"
+            dur="3s"
+            fill="freeze"
+          ></animate>
+          <animate
+            id="left"
+            attributeType="XML"
+            attributeName="x"
+            begin="right.end"
+            from="800"
+            to="60"
+            dur="3s"
+            fill="freeze"
+          ></animate>
+        </rect>
         <!-- 水平布局 end -->
 
         <!-- 垂直布局 start -->
         <!-- <rect x="0" y="0" :width="PIPE_WIDTH" :height="DASHBOARD_WIDTH * 14" fill="url(#vPipe)"></rect> -->
-        <rect x="60" y="260" :width="PIPE_WIDTH" height="600" fill="url(#vPipe)"></rect>
+        <rect x="60" y="260" :width="PIPE_WIDTH" height="600" fill="url(#vPipe)">
+          <animateTransform
+            id="down"
+            attributeType="XML"
+            attributeName="transform"
+            type="translate"
+            begin="0; up.end"
+            from="0, 0"
+            to="0, 120"
+            dur="1s"
+            fill="freeze"
+            repeatCount="indefinite"
+          ></animateTransform>
+          <!-- <animateTransform
+            id="up"
+            attributeType="XML"
+            attributeName="transform"
+            type="translate"
+            begin="down.end"
+            from="0, 120"
+            to="0, 0"
+            dur="3s"
+            fill="freeze"
+          ></animateTransform> -->
+        </rect>
 
         <rect x="180" y="510" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
 
