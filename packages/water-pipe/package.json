@@ -1,0 +1,74 @@
+{
+  "name": "@sirius/water-pipe",
+  "version": "0.0.0",
+  "private": true,
+  "description": "> TODO: description",
+  "author": {
+    "name": "郭之存",
+    "email": "guoplc@163.com"
+  },
+  "homepage": "https://github.com/GuoSirius/monorepo-lerna-pnpm#readme",
+  "license": "ISC",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "core-js": "^3.9.1",
+    "normalize.css": "^8.0.1",
+    "vue": "^2.6.12",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.11",
+    "@vue/cli-plugin-eslint": "~4.5.11",
+    "@vue/cli-plugin-router": "~4.5.11",
+    "@vue/cli-plugin-vuex": "~4.5.11",
+    "@vue/cli-service": "~4.5.11",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "sass": "^1.32.8",
+    "sass-loader": "^8.0.2",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "_id": "@sirius/water-pipe@0.0.0",
+  "bugs": {
+    "url": "https://github.com/GuoSirius/monorepo-lerna-pnpm/issues"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuoSirius/monorepo-lerna-pnpm.git"
+  }
+}
