@@ -45,6 +45,13 @@
       </g>
       <!-- 箭头、圆 end -->
 
+      <!-- 箭头 start -->
+      <g id="arrow01">
+        <line x1="4" y1="0" x2="4" y2="35"></line>
+        <polyline points="0,24 4,35 8,24" fill="none"></polyline>
+      </g>
+      <!-- 箭头 end -->
+
       <!-- 水盘 start -->
       <polygon
         id="waterPond"
@@ -71,7 +78,7 @@
 
       <!--气罐 start  -->
       <g id="gasTank">
-        <path d="M0,12 A12,12,0,0,1,24,12 L24,36 A12,12,0,0,1,0,36 z" fill="green" stroke="black" stroke-width="1"></path>
+        <path d="M0,12 A12,12,0,0,1,24,12 L24,36 A12,12,0,0,1,0,36 z" fill="chartreuse" stroke="black" stroke-width="1"></path>
         <line x1="0" y1="12" x2="24" y2="12" stroke="black" stroke-width="2"></line>
         <use xlink:href="#lightning" x="4"></use>
       </g>
@@ -99,9 +106,9 @@
 
       <!-- 触头 start -->
       <g id="prods">
-        <line x1="2" y1="0" x2="2" y2="36" stroke="black" stroke-width="1"></line>
-        <line x1="10" y1="0" x2="10" y2="36" stroke="black" stroke-width="1"></line>
-        <circle cx="2" cy="24" r="4" fill="black"></circle>
+        <line x1="6" y1="0" x2="6" y2="36" stroke="black" stroke-width="1"></line>
+        <line x1="16" y1="0" x2="16" y2="36" stroke="black" stroke-width="1"></line>
+        <polyline points="2,24 6,32 10,24" fill="none" stroke="black" stroke-width="2"></polyline>
       </g>
       <!-- 触头 end -->
 
@@ -114,15 +121,15 @@
       </g>
 
       <g id="backslashHandle">
-        <rect x="0" y="0" width="12" height="24" fill="green" stroke="black" stroke-width="1"></rect>
+        <rect x="0" y="0" width="12" height="24" stroke="black" stroke-width="1"></rect>
         <line x1="0" y1="0" x2="12" y2="24" stroke="black" stroke-width="1"></line>
       </g>
       <!-- 手柄 end -->
 
       <!-- 字符 M 盒子 start -->
       <g id="letterMBox">
-        <rect x="0"  y="0" width="48" height="36" fill="green" stroke="none"></rect>
-        <text x="14" y="27" font-size="24" font-weight="bold">M</text>
+        <rect x="0"  y="0" width="48" height="36" stroke="none"></rect>
+        <text x="14" y="27" fill="black" font-size="24" font-weight="bold">M</text>
       </g>
       <!-- 字符 M 盒子 end -->
 
@@ -155,24 +162,41 @@
       </g>
 
       <g id="realSwitch03">
-        <rect width="48" height="36" fill="green"></rect>
-        <use xlink:href="#handle" x="48"></use>
+        <use xlink:href="#componentBox"></use>
+        <use xlink:href="#prods" x="12" transform="scale(1, -1) translate(0, -36)"></use>
+        <use xlink:href="#switch" x="45"></use>
+        <use xlink:href="#handle" x="72"></use>
       </g>
 
       <g id="realSwitch04">
-        <use xlink:href="#componentBox"></use>
-        <use xlink:href="#letterW" x="-20" y="10"></use>
-        <use xlink:href="#prods" x="12"></use>
-        <use xlink:href="#switch" x="45"></use>
-        <use xlink:href="#backslashHandle" x="72" y="6"></use>
+        <rect width="48" height="36" fill="chartreuse"></rect>
+        <use xlink:href="#handle" x="48"></use>
       </g>
 
       <g id="realSwitch05">
         <use xlink:href="#componentBox"></use>
         <use xlink:href="#letterW" x="-20" y="10"></use>
+        <use xlink:href="#prods" x="12"></use>
+        <use xlink:href="#switch" x="45"></use>
+        <use xlink:href="#backslashHandle" x="72" y="6" fill="chartreuse"></use>
+      </g>
+
+      <g id="realSwitch06">
+        <use xlink:href="#componentBox"></use>
+        <use xlink:href="#letterW" x="-20" y="10"></use>
         <use xlink:href="#switch" x="8"></use>
         <use xlink:href="#prods" x="45"></use>
-        <use xlink:href="#backslashHandle" x="72" y="6"></use>
+        <use xlink:href="#backslashHandle" x="72" y="6" fill="chartreuse"></use>
+      </g>
+
+      <g id="realSwitch07">
+        <use xlink:href="#componentBox"></use>
+        <use xlink:href="#backslashHandle" x="-12" y="6" fill="red"></use>
+        <use xlink:href="#arrow01" x="11" stroke="black" transform-origin="15 18" transform="rotate(30)"></use>
+        <use xlink:href="#arrow01" x="11" stroke="black" transform-origin="15 18" transform="rotate(150)"></use>
+        <use xlink:href="#arrow01" x="40" stroke="black"></use>
+        <use xlink:href="#arrow01" x="50" stroke="black" transform-origin="54 18" transform="rotate(180)"></use>
+        <use xlink:href="#backslashHandle" x="72" y="6" fill="chartreuse"></use>
       </g>
       <!-- 实操 开关 end -->
     </defs>
@@ -184,107 +208,7 @@
 
       <!-- 水管 start -->
       <g>
-        <!-- 水平布局 start -->
-        <!-- <rect x="0" y="0" :width="DASHBOARD_WIDTH * 20" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect> -->
-        <rect x="240" y="50" width="210" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="450" y="50" width="120" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="570" y="50" width="120" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="690" y="50" width="210" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="810" y="140" width="90" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="900" y="140" width="90" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="1110" y="140" width="90" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="60" y="260" width="120" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="810" y="380" width="90" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="900" y="380" width="90" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="990" y="380" width="120" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="180" y="500" width="60" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-        <rect x="240" y="500" width="60" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="990" y="590" width="120" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="810" y="680" width="180" :height="PIPE_WIDTH" fill="url(#hPipe)"></rect>
-
-        <rect x="60" y="860" width="1050" :height="PIPE_WIDTH" fill="url(#hPipe)">
-          <animate
-            id="right"
-            attributeType="XML"
-            attributeName="x"
-            begin="0; left.end"
-            from="60"
-            to="800"
-            dur="3s"
-            fill="freeze"
-          ></animate>
-          <animate
-            id="left"
-            attributeType="XML"
-            attributeName="x"
-            begin="right.end"
-            from="800"
-            to="60"
-            dur="3s"
-            fill="freeze"
-          ></animate>
-        </rect>
-        <!-- 水平布局 end -->
-
-        <!-- 垂直布局 start -->
-        <!-- <rect x="0" y="0" :width="PIPE_WIDTH" :height="DASHBOARD_WIDTH * 14" fill="url(#vPipe)"></rect> -->
-        <rect x="60" y="260" :width="PIPE_WIDTH" height="600" fill="url(#vPipe)">
-          <animateTransform
-            id="down"
-            attributeType="XML"
-            attributeName="transform"
-            type="translate"
-            begin="0; up.end"
-            from="0, 0"
-            to="0, 120"
-            dur="1s"
-            fill="freeze"
-            repeatCount="indefinite"
-          ></animateTransform>
-          <!-- <animateTransform
-            id="up"
-            attributeType="XML"
-            attributeName="transform"
-            type="translate"
-            begin="down.end"
-            from="0, 120"
-            to="0, 0"
-            dur="3s"
-            fill="freeze"
-          ></animateTransform> -->
-        </rect>
-
-        <rect x="180" y="510" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
-
-        <rect x="240" y="50" :width="PIPE_WIDTH" height="450" fill="url(#vPipe)"></rect>
-
-        <rect x="300" y="500" :width="PIPE_WIDTH" height="250" fill="url(#vPipe)"></rect>
-
-        <rect x="450" y="50" :width="PIPE_WIDTH" height="700" fill="url(#vPipe)"></rect>
-
-        <rect x="570" y="50" :width="PIPE_WIDTH" height="700" fill="url(#vPipe)"></rect>
-
-        <rect x="690" y="50" :width="PIPE_WIDTH" height="700" fill="url(#vPipe)"></rect>
-
-        <rect x="810" y="140" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
-        <rect x="810" y="380" :width="PIPE_WIDTH" height="300" fill="url(#vPipe)"></rect>
-
-        <rect x="900" y="50" :width="PIPE_WIDTH" height="90" fill="url(#vPipe)"></rect>
-        <rect x="900" y="140" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
-
-        <rect x="990" y="140" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
-
-        <rect x="1110" y="150" :width="PIPE_WIDTH" height="240" fill="url(#vPipe)"></rect>
-        <rect x="1110" y="590" :width="PIPE_WIDTH" height="280" fill="url(#vPipe)"></rect>
-
-        <rect x="1200" y="140" :width="PIPE_WIDTH" height="210" fill="url(#vPipe)"></rect>
-        <!-- 垂直布局 end -->
+        <line-pipe v-for="item in LINE_LISTS" :key="item.id" v-bind="item" />
       </g>
       <!-- 水管 end -->
 
@@ -302,18 +226,20 @@
         <use xlink:href="#realSwitch01" x="555" y="120"></use>
 
         <use xlink:href="#realSwitch02" x="675" y="120"></use>
-        <use xlink:href="#realSwitch02" x="975" y="300"></use>
+        <use xlink:href="#realSwitch03" x="975" y="300"></use>
 
-        <use xlink:href="#realSwitch03" x="430" y="330"></use>
+        <use xlink:href="#realSwitch04" x="430" y="330"></use>
 
-        <use xlink:href="#realSwitch04" x="675" y="520"></use>
+        <use xlink:href="#realSwitch05" x="675" y="520"></use>
 
-        <use xlink:href="#realSwitch05" x="1185" y="240"></use>
+        <use xlink:href="#realSwitch06" x="1185" y="240"></use>
+
+        <use xlink:href="#realSwitch07" x="195" y="300"></use>
         <!-- 实操开关 end -->
 
         <!-- 字母 M start -->
-        <use xlink:href="#letterMBox" x="160" y="660"></use>
-        <use xlink:href="#letterMBox" x="280" y="660"></use>
+        <use xlink:href="#letterMBox" x="160" y="660" fill="chartreuse"></use>
+        <use xlink:href="#letterMBox" x="280" y="660" fill="red"></use>
         <!-- 字母 M end -->
 
         <!-- 锚盒 start -->
@@ -323,8 +249,8 @@
 
         <!-- 两个 接水盒 start -->
         <g>
-          <polyline points="180,260 180,330 150,330 150,360" fill="none" stroke="black" stroke-width="2"></polyline>
-          <use xlink:href="#waterPond" x="110" y="350"></use>
+          <polyline points="210,260 210,360 180,360 180,390" fill="none" stroke="black" stroke-width="2"></polyline>
+          <use xlink:href="#waterPond" x="140" y="380"></use>
         </g>
         <use xlink:href="#waterPond" x="1165" y="345"></use>
         <!-- 两个 接水盒 start -->
@@ -343,12 +269,12 @@
 
         <!-- 反馈 start -->
         <g>
-          <polyline points="240,390 390,390 390,750" fill="none" stroke="black" stroke-width="2"></polyline>
-          <polyline points="300,390 300,330 360,330 360,360" fill="none" stroke="black" stroke-width="2"></polyline>
-          <rect x="342" y="360" width="36" height="42" fill="blue"></rect>
-          <line x1="342" y1="372" x2="378" y2="372" stroke="black" stroke-width="2"></line>
-          <polyline points="360,360 378,372 360,384" fill="none" stroke="black" stroke-width="2"></polyline>
-          <polyline points="360,402 366,408 360,414 366,420 362,423 366,425" fill="none" stroke="black" stroke-width="2"></polyline>
+          <polyline points="240,420 390,420 390,750" fill="none" stroke="black" stroke-width="2"></polyline>
+          <polyline points="300,420 300,360 360,360 360,390" fill="none" stroke="black" stroke-width="2"></polyline>
+          <rect x="342" y="390" width="36" height="42" fill="blue"></rect>
+          <line x1="342" y1="402" x2="378" y2="402" stroke="black" stroke-width="2"></line>
+          <polyline points="360,390 378,402 360,414" fill="none" stroke="black" stroke-width="2"></polyline>
+          <polyline points="360,432 366,438 360,444 366,450 362,453 366,455" fill="none" stroke="black" stroke-width="2"></polyline>
         </g>
         <!-- 反馈 end -->
 
@@ -370,13 +296,18 @@
 </template>
 
 <script>
+import cloneDeep from 'lodash/cloneDeep'
+
+import LinePipe from './LinePipe.vue'
+
 import {
   DESIGN_WIDTH,
   DESIGN_HEIGHT,
   PIPE_WIDTH,
   DARK_LENGTH,
   LIGHT_LENGTH,
-  DASHBOARD_WIDTH
+  DASHBOARD_WIDTH,
+  LINE_LISTS
 } from './constant'
 
 export default {
@@ -392,10 +323,13 @@ export default {
   created() {
     this.DESIGN_WIDTH = DESIGN_WIDTH
     this.DESIGN_HEIGHT = DESIGN_HEIGHT
+
     this.PIPE_WIDTH = PIPE_WIDTH
     this.DARK_LENGTH = DARK_LENGTH
     this.LIGHT_LENGTH = LIGHT_LENGTH
     this.DASHBOARD_WIDTH = DASHBOARD_WIDTH
+
+    this.LINE_LISTS = cloneDeep(LINE_LISTS)
 
     this.bindResizeHandler()
   },
@@ -404,6 +338,10 @@ export default {
   },
   beforeDestroy() {
     this.unbindResizeHandler()
+  },
+  components: {
+    LinePipe
+    // LinePipe: () => import('./LinePipe.vue')
   },
   methods: {
     resizeHandler() {
