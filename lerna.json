@@ -3,7 +3,8 @@
   "npmClient": "pnpm",
   "command": {
     "bootstrap": {
-      "hoist": true
+      "hoist": true,
+      "ignore": ["pdf-to-word"]
     }
   },
   "packages": [
