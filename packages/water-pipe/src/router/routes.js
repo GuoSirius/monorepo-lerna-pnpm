@@ -18,6 +18,11 @@ const routes = [
     path: '/water-pipe',
     name: 'WaterPipe',
     component: () => import(/* webpackChunkName: "water-pipe" */ '../views/water-pipe/WaterPipe.vue')
+  },
+  {
+    path: '/canvas-dashboard',
+    name: 'CanvasDashboard',
+    component: () => import(/* webpackChunkName: "canvas-dashboard" */ '../views/canvas-dashboard/CanvasDashboard.vue')
   }
 ]
 
