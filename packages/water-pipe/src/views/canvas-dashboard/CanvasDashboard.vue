@@ -20,7 +20,7 @@ export default {
   mounted() {
     this.initialize()
   },
-  boforeDestroy() {
+  beforeDestroy() {
     this.destroy()
   },
   methods: {
@@ -33,7 +33,8 @@ export default {
       this.$nextTick(() => {
         this.initialize()
 
-        this.canvasDashborad.setValue(1000000, 10000000)
+        this.canvasDashborad.setValue(0, 10000, true)
+        // this.canvasDashborad.setValue(10000, 10000000, true)
       })
     },
     initialize() {
@@ -45,11 +46,12 @@ export default {
       const _canvasDashborad = new CanvasDashboard(canvas, { icon: bocIcon })
 
       this.canvasDashborad = _canvasDashborad
+      window.canvasDashborad = _canvasDashborad
     },
     destroy() {
       const { canvasDashborad } = this
 
-      if (canvasDashborad) return
+      if (!canvasDashborad) return
 
       canvasDashborad.destroy()
 
@@ -61,7 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-
   text-align: center;
 
   .canvas {
