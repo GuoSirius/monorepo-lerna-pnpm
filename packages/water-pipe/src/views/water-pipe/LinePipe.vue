@@ -35,11 +35,7 @@
 <script>
 import uniqueId from 'lodash/uniqueId'
 
-import {
-  ANIMATION_LENGTH,
-  ANIMATION_DOUBLE_LENGTH,
-  ANIMATION_DURATION
-} from './constant'
+import { ANIMATION_LENGTH, ANIMATION_DOUBLE_LENGTH, ANIMATION_DURATION } from './constant'
 
 export default {
   name: 'LiePipe',

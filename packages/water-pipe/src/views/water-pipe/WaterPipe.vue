@@ -1,5 +1,11 @@
 <template>
-  <svg ref="svg" xmlns="http://www.w3.org/2000/svg" class="wrapper" :viewBox="`0.5 0.5 ${viewWidth} ${viewHeight}`" preserveAspectRatio="xMidYMid meet">
+  <svg
+    ref="svg"
+    xmlns="http://www.w3.org/2000/svg"
+    class="wrapper"
+    :viewBox="`0.5 0.5 ${viewWidth} ${viewHeight}`"
+    preserveAspectRatio="xMidYMid meet"
+  >
     <!-- 引用定义 start -->
     <defs>
       <pattern id="grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -14,8 +20,21 @@
         <!-- <line :x1="LIGHT_LENGTH + 0.5" y1="0" :x2="LIGHT_LENGTH + 0.5" :y2="PIPE_WIDTH" stroke="black" stroke-width="1"></line> -->
         <rect :x="LIGHT_LENGTH + 0.5" y="0" :width="DARK_LENGTH" :height="PIPE_WIDTH" fill="black"></rect>
         <!-- <line :x1="LIGHT_LENGTH + DARK_LENGTH + 1.5" y1="0" :x2="LIGHT_LENGTH + DARK_LENGTH + 1.5" :y2="PIPE_WIDTH" stroke="black" stroke-width="1"></line> -->
-        <rect :x="LIGHT_LENGTH + DARK_LENGTH + 0.5" y="0" :width="LIGHT_LENGTH" :height="PIPE_WIDTH" fill="yellow"></rect>
-        <line :x1="DASHBOARD_WIDTH - 0.5" y1="0" :x2="DASHBOARD_WIDTH - 0.5" :y2="PIPE_WIDTH" stroke="black" stroke-width="0.5"></line>
+        <rect
+          :x="LIGHT_LENGTH + DARK_LENGTH + 0.5"
+          y="0"
+          :width="LIGHT_LENGTH"
+          :height="PIPE_WIDTH"
+          fill="yellow"
+        ></rect>
+        <line
+          :x1="DASHBOARD_WIDTH - 0.5"
+          y1="0"
+          :x2="DASHBOARD_WIDTH - 0.5"
+          :y2="PIPE_WIDTH"
+          stroke="black"
+          stroke-width="0.5"
+        ></line>
       </pattern>
 
       <pattern id="vPipe" x="0" y="0" :width="PIPE_WIDTH" :height="DASHBOARD_WIDTH" patternUnits="userSpaceOnUse">
@@ -24,19 +43,33 @@
         <!-- <line x1="0" :y1="LIGHT_LENGTH + 0.5" :x2="PIPE_WIDTH" :y2="LIGHT_LENGTH + 0.5" stroke="black" stroke-width="1"></line> -->
         <rect x="0" :y="LIGHT_LENGTH + 0.5" :width="PIPE_WIDTH" :height="DARK_LENGTH" fill="black"></rect>
         <!-- <line x1="0" :y1="LIGHT_LENGTH + DARK_LENGTH + 1.5" :x2="PIPE_WIDTH" :y2="LIGHT_LENGTH + DARK_LENGTH + 1.5" stroke="black" stroke-width="1"></line> -->
-        <rect x="0" :y="LIGHT_LENGTH + DARK_LENGTH + 0.5" :width="PIPE_WIDTH" :height="LIGHT_LENGTH" fill="yellow"></rect>
-        <line x1="0" :y1="DASHBOARD_WIDTH - 0.5" :x2="PIPE_WIDTH" :y2="DASHBOARD_WIDTH - 0.5" stroke="black" stroke-width="0.5"></line>
+        <rect
+          x="0"
+          :y="LIGHT_LENGTH + DARK_LENGTH + 0.5"
+          :width="PIPE_WIDTH"
+          :height="LIGHT_LENGTH"
+          fill="yellow"
+        ></rect>
+        <line
+          x1="0"
+          :y1="DASHBOARD_WIDTH - 0.5"
+          :x2="PIPE_WIDTH"
+          :y2="DASHBOARD_WIDTH - 0.5"
+          stroke="black"
+          stroke-width="0.5"
+        ></line>
       </pattern>
       <!-- 水管 end -->
 
       <!-- 箭头、圆 start -->
-      <g id="arrowCircle" :transform="`translate(${(10/Math.sin(Math.PI/4) + 5)*Math.tan(Math.PI/4)}, 10)`">
+      <g id="arrowCircle" :transform="`translate(${(10 / Math.sin(Math.PI / 4) + 5) * Math.tan(Math.PI / 4)}, 10)`">
         <circle cx="0" cy="0" r="10" fill="blue"></circle>
         <polyline
-          :points="`
-            -${(10/Math.sin(Math.PI/4) + 5)*Math.tan(Math.PI/4)},-5
-            0,${10/Math.sin(Math.PI/4)}
-            ${(10/Math.sin(Math.PI/4) + 5)*Math.tan(Math.PI/4)},-5`
+          :points="
+            `
+            -${(10 / Math.sin(Math.PI / 4) + 5) * Math.tan(Math.PI / 4)},-5
+            0,${10 / Math.sin(Math.PI / 4)}
+            ${(10 / Math.sin(Math.PI / 4) + 5) * Math.tan(Math.PI / 4)},-5`
           "
           fill="none"
           stroke="black"
@@ -53,11 +86,7 @@
       <!-- 箭头 end -->
 
       <!-- 水盘 start -->
-      <polygon
-        id="waterPond"
-        points="0,0 0,24 80,24 80,0 72,0 72,16 8,16 8,0"
-        fill="yellow"
-      ></polygon>
+      <polygon id="waterPond" points="0,0 0,24 80,24 80,0 72,0 72,16 8,16 8,0" fill="yellow"></polygon>
       <!-- 水盘 end -->
 
       <!-- 警示灯 start -->
@@ -78,7 +107,12 @@
 
       <!--气罐 start  -->
       <g id="gasTank">
-        <path d="M0,12 A12,12,0,0,1,24,12 L24,36 A12,12,0,0,1,0,36 z" fill="chartreuse" stroke="black" stroke-width="1"></path>
+        <path
+          d="M0,12 A12,12,0,0,1,24,12 L24,36 A12,12,0,0,1,0,36 z"
+          fill="chartreuse"
+          stroke="black"
+          stroke-width="1"
+        ></path>
         <line x1="0" y1="12" x2="24" y2="12" stroke="black" stroke-width="2"></line>
         <use xlink:href="#lightning" x="4"></use>
       </g>
@@ -116,7 +150,16 @@
       <g id="handle">
         <line x1="0" y1="12" x2="16" y2="12" stroke="black" stroke-width="1"></line>
         <line x1="0" y1="22" x2="24" y2="22" stroke="black" stroke-width="1"></line>
-        <line x1="8" y1="17" x2="32" y2="17" stroke="black" stroke-width="1" transform-origin="20 17" :transform="`rotate(${Math.atan(1.25) * 180 / Math.PI})`"></line>
+        <line
+          x1="8"
+          y1="17"
+          x2="32"
+          y2="17"
+          stroke="black"
+          stroke-width="1"
+          transform-origin="20 17"
+          :transform="`rotate(${(Math.atan(1.25) * 180) / Math.PI})`"
+        ></line>
         <circle cx="12" cy="6" r="4" fill="white" stroke="black" stroke-width="1"></circle>
       </g>
 
@@ -128,7 +171,7 @@
 
       <!-- 字符 M 盒子 start -->
       <g id="letterMBox">
-        <rect x="0"  y="0" width="48" height="36" stroke="none"></rect>
+        <rect x="0" y="0" width="48" height="36" stroke="none"></rect>
         <text x="14" y="27" fill="black" font-size="24" font-weight="bold">M</text>
       </g>
       <!-- 字符 M 盒子 end -->
@@ -274,17 +317,39 @@
           <rect x="342" y="390" width="36" height="42" fill="blue"></rect>
           <line x1="342" y1="402" x2="378" y2="402" stroke="black" stroke-width="2"></line>
           <polyline points="360,390 378,402 360,414" fill="none" stroke="black" stroke-width="2"></polyline>
-          <polyline points="360,432 366,438 360,444 366,450 362,453 366,455" fill="none" stroke="black" stroke-width="2"></polyline>
+          <polyline
+            points="360,432 366,438 360,444 366,450 362,453 366,455"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+          ></polyline>
         </g>
         <!-- 反馈 end -->
 
         <!-- 度量 start -->
         <g>
           <line x1="1020" y1="580" x2="1020" y2="544" stroke="gray" stroke-width="2"></line>
-          <line x1="984" y1="544" x2="1056" y2="544" stroke="gray" stroke-width="2" transform-origin="1020 544" transform="rotate(-20)"></line>
+          <line
+            x1="984"
+            y1="544"
+            x2="1056"
+            y2="544"
+            stroke="gray"
+            stroke-width="2"
+            transform-origin="1020 544"
+            transform="rotate(-20)"
+          ></line>
           <polygon points="988,556 980,564 996,564" fill="gray" stroke="black" stroke-width="0.5"></polygon>
           <circle cx="988" cy="556" r="3" fill="white" stroke="black" stroke-width="0.5"></circle>
-          <rect x="1056" y="544" width="36" height="36" fill="blue" transform-origin="1056 544" transform="translate(-16, -24) scale(1.2, 1)  rotate(-45)"></rect>
+          <rect
+            x="1056"
+            y="544"
+            width="36"
+            height="36"
+            fill="blue"
+            transform-origin="1056 544"
+            transform="translate(-16, -24) scale(1.2, 1)  rotate(-45)"
+          ></rect>
           <rect x="990" y="580" width="60" height="120" fill="#ddd"></rect>
         </g>
         <!-- 度量 end -->
