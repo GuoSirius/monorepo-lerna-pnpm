@@ -2,16 +2,19 @@ const USE_AUXILIARY_LINE = true
 
 const DEFAULT_OPTIONS = {
   stats: null,
+  needDrawText: true, // 是否需要绘制文本
   title: '最高额度',
   icon: '', // 图标 地址 或者 base64
   iconWidth: 18, // 图标 宽度
   iconHeight: 12, // 图标 高度
   titleColor: '#FFF', // 标题颜色
   titleFontSize: 16, // 标题大小
+  titleOffsetY: 0, // 标题 Y轴偏移
   minValue: 0, // 最小值
   maxValue: 0, // 最大值
   valueColor: '#FFF', // 数值颜色
   valueFontSize: 30, // 数值大小
+  valueOffsetY: 0, // 数值 Y轴偏移
   margin: 8, // 画板留白
   padding: 5, // 画板内边距
   radius: 96, // 圆弧半径
@@ -229,6 +232,10 @@ Object.assign(CanvasDashboard.prototype, {
 
     if (needUpdate) this.updateValue(minValue, maxValue)
   },
+  // 获取 当前值
+  getCurrentValue() {
+    return this.currentValue
+  },
   // 更新 最小值、最大值
   updateValue() {
     const options = this.options
@@ -385,6 +392,11 @@ Object.assign(CanvasDashboard.prototype, {
 
     const cx = this.cx
     const cy = this.cy
+    const _offsetY = this.offsetY + offsetY
+
+    const needDrawText = options.needDrawText
+
+    if (!needDrawText) return
 
     let text = options.title
     let color = options.titleColor
@@ -407,7 +419,7 @@ Object.assign(CanvasDashboard.prototype, {
     context.fillStyle = color
     context.font = font
 
-    context.fillText(text, cx, cy + offsetY + fontSize * 0.32)
+    context.fillText(text, cx, cy + _offsetY + fontSize * 0.32)
 
     context.fill()
     context.stroke()
@@ -416,17 +428,18 @@ Object.assign(CanvasDashboard.prototype, {
   drawTitle() {
     const options = this.options
 
-    const offsetY = this.offsetY
-
+    const titleOffsetY = options.titleOffsetY
     const valueFontSize = options.valueFontSize
 
-    this.drawText(false, offsetY - valueFontSize * 1.2)
+    this.drawText(false, -(valueFontSize * 1.2 + titleOffsetY))
   },
   // 绘制 数值
   drawValue() {
-    const offsetY = this.offsetY
+    const options = this.options
 
-    this.drawText(true, offsetY)
+    const valueOffsetY = options.valueOffsetY
+
+    this.drawText(true, valueOffsetY)
   },
   // 绘制 辅助线
   drawAuxiliaryLine() {
@@ -491,6 +504,7 @@ Object.assign(CanvasDashboard.prototype, {
     const _stepDegree = deltaValue ? stepDegree : 0
 
     if (currentDegree >= arcDegree) {
+      this.currentValue = minimumValue
       this.currentDegree = 0
 
       return false

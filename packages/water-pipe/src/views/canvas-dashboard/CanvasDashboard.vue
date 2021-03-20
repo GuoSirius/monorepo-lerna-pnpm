@@ -43,7 +43,7 @@ export default {
 
       if (!canvas || canvasDashborad) return
 
-      const _canvasDashborad = new CanvasDashboard(canvas, { radius: 240, icon: bocIcon })
+      const _canvasDashborad = new CanvasDashboard(canvas, { radius: 240, icon: bocIcon, titleOffsetY: 10 })
 
       this.canvasDashborad = _canvasDashborad
       window.canvasDashborad = _canvasDashborad
