@@ -1,3 +1,5 @@
+const USE_AUXILIARY_LINE = true
+
 const DEFAULT_OPTIONS = {
   stats: null,
   title: '最高额度',
@@ -20,6 +22,8 @@ const DEFAULT_OPTIONS = {
   innerStroke: 'red', // 内圆描边颜色
   innerFill: 'red', // 内圆填充颜色
   dotCount: 10, // 圆点数量
+  dotRadius: 3, // 圆点半径
+  dotMargin: 8, // 圆点留白
   dotStroke: 'transparent', // 圆点描边色
   dotFill: '#B13333', // 圆点填充色
   activeDotStroke: 'transparent', // 圆点激活后的描边色
@@ -85,6 +89,7 @@ Object.assign(CanvasDashboard.prototype, {
 
     this.cx = outerRadius
     this.cy = outerRadius
+    this.offsetY = height / 24
 
     this.outerRadius = outerRadius
     this.outerDiameter = outerDiameter
@@ -317,10 +322,12 @@ Object.assign(CanvasDashboard.prototype, {
 
     const cx = this.cx
     const cy = this.cy
-    const innerRadius = this.innerRadius - 8
+    const innerRadius = this.innerRadius
     const currentDegree = this.currentDegree
 
     const dotCount = Math.max(options.dotCount, 2)
+    const dotRadius = options.dotRadius
+    const dotMargin = options.dotMargin
     const dotFill = options.dotFill
     const dotStroke = options.dotStroke
     const activeDotFill = options.activeDotFill
@@ -333,6 +340,7 @@ Object.assign(CanvasDashboard.prototype, {
     const halfAuxiliaryDegree = auxiliaryDegree / 2
 
     const startAngle = halfPI + halfAuxiliaryDegree
+    const _innerRadius = innerRadius - dotMargin
 
     const stepAngle = (arcDegree * Math.PI) / 180 / (dotCount - 1)
     const currentAngle = startAngle + (currentDegree * Math.PI) / 180
@@ -352,7 +360,14 @@ Object.assign(CanvasDashboard.prototype, {
         context.strokeStyle = activeDotStroke
       }
 
-      context.arc(cx + innerRadius * Math.cos(angle), cy + innerRadius * Math.sin(angle), 3, 0, doublePI, false)
+      context.arc(
+        cx + _innerRadius * Math.cos(angle),
+        cy + _innerRadius * Math.sin(angle),
+        dotRadius,
+        0,
+        doublePI,
+        false
+      )
 
       context.closePath()
 
@@ -399,15 +414,43 @@ Object.assign(CanvasDashboard.prototype, {
   },
   // 绘制 标题
   drawTitle() {
-    const height = this.height
+    const options = this.options
 
-    this.drawText(false, -height / 6)
+    const offsetY = this.offsetY
+
+    const valueFontSize = options.valueFontSize
+
+    this.drawText(false, offsetY - valueFontSize * 1.2)
   },
   // 绘制 数值
   drawValue() {
+    const offsetY = this.offsetY
+
+    this.drawText(true, offsetY)
+  },
+  // 绘制 辅助线
+  drawAuxiliaryLine() {
+    const context = this.context
+
+    const cx = this.cx
+    const cy = this.cy
+    const width = this.width
     const height = this.height
 
-    this.drawText(true, height / 24)
+    context.beginPath()
+
+    context.strokeStyle = '#FFF'
+    context.lineWidth = 1
+
+    context.moveTo(0, cy)
+    context.lineTo(width, cy)
+
+    context.moveTo(cx, 0)
+    context.lineTo(cx, height)
+
+    context.closePath()
+
+    context.stroke()
   },
   // 绘制
   draw() {
@@ -428,6 +471,8 @@ Object.assign(CanvasDashboard.prototype, {
 
     this.drawTitle()
     this.drawValue()
+
+    if (USE_AUXILIARY_LINE) this.drawAuxiliaryLine()
   },
   // 更新
   update() {
