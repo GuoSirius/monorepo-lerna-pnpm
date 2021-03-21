@@ -504,7 +504,8 @@ Object.assign(CanvasDashboard.prototype, {
     const _stepDegree = deltaValue ? stepDegree : 0
 
     if (currentDegree >= arcDegree) {
-      this.currentValue = minimumValue
+      // 不能重置当前值，否则最后延时时，最大值不对
+      // this.currentValue = minimumValue
       this.currentDegree = 0
 
       return false
