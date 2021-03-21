@@ -14,6 +14,7 @@ dependencies:
   babel-plugin-import: 1.13.3
   chai: 4.3.4
   chai-as-promised: 7.1.1_chai@4.3.4
+  convnetjs: 0.3.0
   core-js: 3.9.1
   dayjs: 1.10.4
   electron: 11.3.0
@@ -4886,6 +4887,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4FJkXzKXEDB1snCFZlLP4gpC3JILicCpGbzG9f9G7tGqGCzETQ2hWPrcinA9oU4wtf2biUaEH5065UnMeR33oA==
+  /convnetjs/0.3.0:
+    dev: false
+    resolution:
+      integrity: sha1-I5KUjtj+Z7xX3k28/zQjoSfnwPU=
   /cookie-signature/1.0.6:
     resolution:
       integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
@@ -15255,6 +15260,7 @@ specifiers:
   babel-plugin-import: ^1.13.3
   chai: ^4.3.3
   chai-as-promised: ^7.1.1
+  convnetjs: ^0.3.0
   core-js: ^3.9.1
   dayjs: ^1.10.4
   electron: ^11.3.0
