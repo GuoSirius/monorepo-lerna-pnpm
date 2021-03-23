@@ -168,8 +168,7 @@ export const LINE_LISTS = [
     height: 240,
     fill: 'url(#vPipe)',
     isVertical: true,
-    needAnimate: true,
-    isReverse: true
+    needAnimate: true
   },
 
   {
