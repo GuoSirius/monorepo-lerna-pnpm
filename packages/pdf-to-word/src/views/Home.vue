@@ -35,13 +35,12 @@ import { readFileAsArrayBuffer } from '@/service/tesseract-ocr'
 export default defineComponent({
   name: 'Home',
   setup() {
-    const message = ref('hellp')
     const fileLists = ref([])
 
     window.demo = demo
     window.tesseract = tesseract
 
-    return { message, fileLists }
+    return { fileLists }
   },
   methods: {
     changeHandler(file, fileLists) {
@@ -54,9 +53,9 @@ export default defineComponent({
       }).then(result => {
         return Promise.all(result.map(({ canvas }) => {
           return new Promise(resolve => {
-            resolve(canvas)
-            // resolve(canvas.toDataURL("image/jpeg", 1.0))
-            // canvas.toBlob(result => resolve(result), 'image/jpeg', 0.8)
+            // resolve(canvas)
+            resolve(canvas.toDataURL("image/jpeg", 0.2))
+            // canvas.toBlob(result => resolve(result), 'image/jpeg', 0.2)
           })
         }))
       }).then(result => {
