@@ -1,6 +1,10 @@
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist'
 import pdfWorkerEntry from 'pdfjs-dist/build/pdf.worker.entry'
 
+import pLimit from 'p-limit'
+
+export const limit = pLimit(8)
+
 GlobalWorkerOptions.workerSrc = pdfWorkerEntry
 
 export default function parsePDFDocument(bufferUrl) {
@@ -14,7 +18,7 @@ export default function parsePDFDocument(bufferUrl) {
     const promises = Array.from({ length: totalPages }).map((item, index) => {
       pageNumber = index + 1
 
-      return getPDFPageProxy(pdf, pageNumber).then(page => {
+      return limit((pdf, pageNumber) => (getPDFPageProxy(pdf, pageNumber).then(page => {
         const canvas = document.createElement('canvas')
         const context = canvas.getContext('2d')
 
@@ -33,8 +37,16 @@ export default function parsePDFDocument(bufferUrl) {
           canvasContext: context
         }
 
-        return getRenderTask(page, renderContext).promise.then(() => ({ pdf, page, pageNumber, totalPages, canvas, context, viewport }))
-      })
+        return getRenderTask(page, renderContext).promise.then(() => ({
+          pdf,
+          page,
+          pageNumber,
+          totalPages,
+          canvas,
+          context,
+          viewport
+        }))
+      })), pdf, pageNumber)
     })
 
     return Promise.all(promises)

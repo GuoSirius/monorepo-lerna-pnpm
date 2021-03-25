@@ -25,47 +25,56 @@
 <script>
 import { defineComponent, ref } from 'vue'
 
-import * as demo from 'pdfjs-dist'
-import * as tesseract from 'tesseract.js'
+import { recognizeOCR } from '@/api/ocr'
 
-import parsePDFDocument from '@/service/pdfjs'
-import scheduler from '@/service/tesseract'
-import { readFileAsArrayBuffer } from '@/service/tesseract-ocr'
+import parsePDFDocument, { limit } from '@/service/pdfjs'
+// import scheduler from '@/service/tesseract'
+import { generateDOCX } from '@/service/docx'
+// import { generateDOCX } from '@/service/office-gen'
+import { readFileAsArrayBuffer } from '@/service/file-reader'
 
 export default defineComponent({
   name: 'Home',
   setup() {
     const fileLists = ref([])
 
-    window.demo = demo
-    window.tesseract = tesseract
-
     return { fileLists }
   },
   methods: {
     changeHandler(file, fileLists) {
-      this.fileLists = fileLists
+      this.fileLists = fileLists && [file]
 
       const loading = this.$loading()
 
-      readFileAsArrayBuffer(file.raw).then(result => {
-        return parsePDFDocument(result.result)
-      }).then(result => {
-        return Promise.all(result.map(({ canvas }) => {
-          return new Promise(resolve => {
-            // resolve(canvas)
-            resolve(canvas.toDataURL("image/jpeg", 0.2))
-            // canvas.toBlob(result => resolve(result), 'image/jpeg', 0.2)
-          })
-        }))
-      }).then(result => {
-        console.log('resource', result)
-        return Promise.all(result.map(blob => scheduler.addJob('recognize', blob)))
-      }).then(result => {
-        console.log('result', result, scheduler)
-      }).finally(() => {
-        loading.close()
-      })
+      readFileAsArrayBuffer(file.raw)
+        .then(result => {
+          return parsePDFDocument(result.result)
+        })
+        .then(result => {
+          return Promise.all(
+            result.map(({ canvas }) => {
+              return limit(() => (new Promise(resolve => {
+                // resolve(canvas)
+                resolve(canvas.toDataURL('image/jpeg', 0.2))
+                // canvas.toBlob(result => resolve(result), 'image/jpeg', 0.2)
+              })))
+            })
+          )
+        })
+        .then(result => {
+          // return Promise.all(result.map(blob => scheduler.addJob('recognize', blob)))
+          return Promise.all(result.map(blob => limit(() => recognizeOCR({ base64: blob }))))
+        })
+        .then(result => {
+          console.log('result', result)
+          return result.map(item => item.txtResult)
+        })
+        .then(result => {
+          generateDOCX(result)
+        })
+        .finally(() => {
+          loading.close()
+        })
     },
     previewHandler() {
       // console.log('previewHandler', arguments)
