@@ -21,6 +21,8 @@
     "core-js": "^3.9.1",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
+    "regenerator-runtime": "^0.13.7",
+    "socket.io-client": "^4.0.0",
     "vue": "^2.6.12",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"

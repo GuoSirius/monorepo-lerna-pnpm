@@ -365,6 +365,8 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import LinePipe from './LinePipe.vue'
 
+import { openValuePreset, normalOpenValue, normalCloseValue, accidentCloseValue } from './helper'
+
 import {
   DESIGN_WIDTH,
   DESIGN_HEIGHT,
@@ -379,6 +381,7 @@ export default {
   name: 'WaterPipe',
   data() {
     return {
+      LINE_LISTS: [],
       realWidth: DESIGN_WIDTH,
       realHeight: DESIGN_HEIGHT,
       viewWidth: DESIGN_WIDTH,
@@ -397,6 +400,11 @@ export default {
     this.LINE_LISTS = cloneDeep(LINE_LISTS)
 
     this.bindResizeHandler()
+
+    window.openValuePreset = openValuePreset.bind(this, this.LINE_LISTS)
+    window.normalOpenValue = normalOpenValue.bind(this, this.LINE_LISTS)
+    window.normalCloseValue = normalCloseValue.bind(this, this.LINE_LISTS)
+    window.accidentCloseValue = accidentCloseValue.bind(this, this.LINE_LISTS)
   },
   mounted() {
     this.resizeHandler()
@@ -409,6 +417,10 @@ export default {
     // LinePipe: () => import('./LinePipe.vue')
   },
   methods: {
+    openValuePreset,
+    normalOpenValue,
+    normalCloseValue,
+    accidentCloseValue,
     resizeHandler() {
       const { $refs } = this
       const svg = $refs.svg

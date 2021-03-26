@@ -4,7 +4,7 @@
   "command": {
     "bootstrap": {
       "hoist": true,
-      "ignore": ["@sirius/pdf-to-word"]
+      "ignore": ["@sirius/billboard", "@sirius/pdf-to-word"]
     }
   },
   "packages": [

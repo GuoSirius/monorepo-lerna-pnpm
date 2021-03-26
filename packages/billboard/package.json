@@ -1,0 +1,93 @@
+{
+  "name": "@sirius/billboard",
+  "version": "0.0.0",
+  "private": true,
+  "description": "> TODO: description",
+  "author": {
+    "name": "郭之存",
+    "email": "guoplc@163.com"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "main": "background.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "better-scroll": "^2.2.1",
+    "camo": "^0.12.3",
+    "core-js": "^3.9.1",
+    "dayjs": "^1.10.4",
+    "element-plus": "^1.0.2-beta.35",
+    "lodash": "^4.17.21",
+    "lowdb": "^1.0.0",
+    "moment": "^2.29.1",
+    "normalize.css": "^8.0.1",
+    "swiper": "^6.5.0",
+    "vue": "^3.0.7",
+    "vue-router": "^4.0.5",
+    "vuedraggable": "^2.24.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.12",
+    "@vue/cli-plugin-eslint": "~4.5.12",
+    "@vue/cli-plugin-router": "~4.5.12",
+    "@vue/cli-plugin-vuex": "~4.5.12",
+    "@vue/cli-service": "~4.5.12",
+    "@vue/compiler-sfc": "^3.0.7",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
+    "babel-plugin-import": "^1.13.3",
+    "electron": "^11.4.1",
+    "electron-devtools-installer": "^3.1.1",
+    "eslint": "^7.22.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.8.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "sass": "^1.32.8",
+    "sass-loader": "^10.1.1",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^5.0.0",
+    "vue-cli-plugin-electron-builder": "~2.0.0-rc.6",
+    "vue-cli-plugin-element-plus": "^0.0.13"
+  },
+  "_id": "@sirius/billboard@0.0.0",
+  "bugs": {
+    "url": "https://github.com/GuoSirius/monorepo-lerna-pnpm/issues"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "homepage": "https://github.com/GuoSirius/monorepo-lerna-pnpm#readme",
+  "license": "ISC",
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuoSirius/monorepo-lerna-pnpm.git"
+  }
+}
