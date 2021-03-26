@@ -18,9 +18,6 @@ locale.use(lang)
 
 const app = createApp(App)
 
-app
-  .use(store)
-  .use(router)
-  .use(ElementPlus, { locale: lang, size: 'small', zIndex: 20210326 })
+app.use(store).use(router).use(ElementPlus, { locale: lang, size: 'small', zIndex: 20210326 })
 
 app.mount('#app')
