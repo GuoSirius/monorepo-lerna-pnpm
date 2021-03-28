@@ -1,0 +1,36 @@
+html, body {
+  width: 100%;
+  height:100%;
+  line-height: 1.5;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgb(204, 204, 204);
+  -webkit-box-shadow: inset 0 0 5px rgb(0 0 0 / 20%);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: rgb(245, 246, 248);
+  -webkit-box-shadow: inset 0 0 5px rgb(0 0 0 / 20%);
+}
+
+textarea, textarea:focus {
+  resize: none;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}

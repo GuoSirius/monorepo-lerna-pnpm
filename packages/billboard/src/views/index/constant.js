@@ -12,3 +12,8 @@ export const COLOR_LISTS = [
   'rgb(133, 179, 237)',
   'rgb(132, 198, 155)'
 ]
+
+// 列表 类型
+export const LIST_TYPE_ALL = 'all'
+export const LIST_TYPE_UNFINISHED = 'unfinished'
+export const LIST_TYPE_COMPLETED = 'completed'

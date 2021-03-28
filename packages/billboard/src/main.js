@@ -1,8 +1,13 @@
+import 'reset-css'
 import 'normalize.css'
 import 'element-plus/lib/theme-chalk/index.css'
 // import 'element-plus/packages/theme-chalk/src/index.scss'
 // import '@/assets/scss/element-ui.scss'
 
+import './assets/scss/common.scss'
+import './assets/scss/element-ui.scss'
+
+// import './service/vue-devtools'
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 
