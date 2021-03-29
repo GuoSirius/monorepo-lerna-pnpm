@@ -1,9 +1,12 @@
 'use strict'
 
+import { initialize } from '@electron/remote/main'
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+initialize()
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true, stream: true } }])
@@ -12,7 +15,7 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1000,
-    height: 750,
+    height: 680,
     useContentSize: true,
     autoHideMenuBar: true,
     webPreferences: {

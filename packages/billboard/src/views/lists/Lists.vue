@@ -10,27 +10,55 @@
     </el-header>
 
     <el-main class="main">
-      <div class="main-lists">
-        <div v-for="(item, listIndex) in cardLists" :key="listIndex" class="main-item">
-          <div class="main-header">
-            <h2 class="main-header-title">{{ item.title }}</h2>
-            <span class="main-header-count">({{ item.lists?.length || 0 }})</span>
+      <vue-draggable
+        v-model="cardLists"
+        tag="transition-group"
+        :component-data="{
+          tag: 'div',
+          type: 'transition-group',
+          name: isDraggingList ? null : 'flip-list'
+        }"
+        item-key="title"
+        group="card-list"
+        class="main-lists"
+        v-bind="{ ...DRAGGABLE_OPTIONS, handle: '.main-header' }"
+        @start="startDragListHandler"
+        @end="endDragListHandler"
+      >
+        <template #item="{ element: item, index: listIndex }">
+          <div :key="item.title" class="main-item">
+            <div class="main-header">
+              <h2 class="main-header-title">{{ item.title }}</h2>
+              <span class="main-header-count">({{ item.lists?.length || 0 }})</span>
 
-            <el-popover width="100px" trigger="focus" placement="right">
-              <template #reference>
-                <i tabindex="-1" class="el-icon-more main-more main-header-more" @click.stop></i>
-              </template>
+              <el-popover width="100px" trigger="focus" placement="right">
+                <template #reference>
+                  <i tabindex="-1" class="el-icon-more main-more main-header-more" @click.stop></i>
+                </template>
 
-              <ul class="main-actions">
-                <li class="main-action">重命名列表</li>
-                <li class="main-action">删除列表</li>
-                <li class="main-action">完成列表</li>
-              </ul>
-            </el-popover>
-          </div>
-          <div class="main-box">
-            <ul class="lists">
-              <vue-draggable v-model="item.lists" tag="transition-group" item-key="title" group="card-lists">
+                <ul class="main-actions">
+                  <li class="main-action">重命名列表</li>
+                  <li class="main-action">删除列表</li>
+                  <li class="main-action">完成列表</li>
+                </ul>
+              </el-popover>
+            </div>
+            <div class="main-box">
+              <vue-draggable
+                v-model="item.lists"
+                tag="transition-group"
+                :component-data="{
+                  tag: 'ul',
+                  type: 'transition-group',
+                  name: isDraggingCard ? null : 'flip-card'
+                }"
+                item-key="title"
+                group="card-item"
+                class="lists"
+                v-bind="DRAGGABLE_OPTIONS"
+                @start="startDragCardHandler"
+                @end="endDragCardHandler"
+              >
                 <template #item="{ element, index }">
                   <li :key="element.title" class="item" @click.stop="cardClickedHandler(item, index, listIndex)">
                     {{ element.title }}
@@ -41,7 +69,6 @@
                       </template>
 
                       <ul class="main-actions">
-                        <li class="main-action">重命名卡片</li>
                         <li class="main-action">删除卡片</li>
                         <li class="main-action">完成卡片</li>
                       </ul>
@@ -49,71 +76,80 @@
                   </li>
                 </template>
               </vue-draggable>
-            </ul>
 
-            <div class="new-card">
-              <div v-if="listIndex === activeListId && isAddingCard" class="main-form">
-                <el-input
-                  v-model="cardTitle"
-                  :autosize="{ minRows: 3 }"
-                  type="textarea"
-                  rows="2"
-                  placeholder="请输入卡片名称"
-                  @keyup.enter.stop.prevent="newCardConfirmHandler"
-                />
+              <div class="new-card">
+                <div v-if="listIndex === activeListId && isAddingCard" class="main-form">
+                  <el-input
+                    v-model="cardTitle"
+                    :autosize="{ minRows: 3 }"
+                    type="textarea"
+                    rows="2"
+                    autofocus
+                    placeholder="请输入卡片名称"
+                    @keyup.enter.stop.prevent="newCardConfirmHandler"
+                  />
 
-                <div class="main-form-actions">
-                  <el-button type="text" class="main-form-cancel" @click.stop="newCardCancelHandler">取消</el-button>
-                  <el-button type="warning" size="mini" round :disabled="!cardTitle" @click.stop="newCardConfirmHandler"
-                    >确定</el-button
-                  >
+                  <div class="main-form-actions">
+                    <el-button type="text" class="main-form-cancel" @click.stop="newCardCancelHandler">取消</el-button>
+                    <el-button
+                      type="warning"
+                      size="mini"
+                      round
+                      :disabled="!cardTitle"
+                      @click.stop="newCardConfirmHandler"
+                      >确定</el-button
+                    >
+                  </div>
                 </div>
+
+                <el-button
+                  v-else
+                  type="default"
+                  size="medium"
+                  icon="el-icon-plus"
+                  round
+                  class="new-card-button"
+                  @click.stop="newCardHandler(item, listIndex)"
+                  >新建卡片</el-button
+                >
               </div>
-
-              <el-button
-                v-else
-                type="default"
-                size="medium"
-                icon="el-icon-plus"
-                round
-                class="new-card-button"
-                @click.stop="newCardHandler(item, listIndex)"
-                >新建卡片</el-button
-              >
             </div>
           </div>
-        </div>
+        </template>
 
-        <div class="main-item main-item-create">
-          <div v-if="isAddingList" class="main-form">
-            <el-input
-              v-model="listTitle"
-              :autosize="{ minRows: 2 }"
-              type="textarea"
-              rows="2"
-              placeholder="请输入列表名称"
-              @keyup.enter.stop.prevent="addListConfirmHandler"
-            />
+        <template #footer>
+          <div key="list-footer" class="main-item main-item-create">
+            <div v-if="isAddingList" class="main-form">
+              <el-input
+                v-model="listTitle"
+                :autosize="{ minRows: 2 }"
+                type="textarea"
+                rows="2"
+                autofocus
+                placeholder="请输入列表名称"
+                @keyup.enter.stop.prevent="addListConfirmHandler"
+              />
 
-            <div class="main-form-actions">
-              <el-button type="text" class="main-form-cancel" @click.stop="addListCancelHandler">取消</el-button>
-              <el-button type="warning" size="mini" round :disabled="!listTitle" @click.stop="addListConfirmHandler"
-                >确定</el-button
-              >
+              <div class="main-form-actions">
+                <el-button type="text" class="main-form-cancel" @click.stop="addListCancelHandler">取消</el-button>
+                <el-button type="warning" size="mini" round :disabled="!listTitle" @click.stop="addListConfirmHandler"
+                  >确定</el-button
+                >
+              </div>
             </div>
-          </div>
 
-          <el-button
-            v-else
-            type="text"
-            size="medium"
-            icon="el-icon-plus"
-            class="main-item-create-button"
-            @click.stop="addListHandler"
-            >添加列表</el-button
-          >
-        </div>
-      </div>
+            <el-button
+              v-else
+              type="text"
+              size="medium"
+              icon="el-icon-plus"
+              class="main-item-create-button"
+              @click.stop="addListHandler"
+              >添加列表</el-button
+            >
+          </div>
+        </template>
+      </vue-draggable>
     </el-main>
   </el-container>
 </template>
@@ -124,7 +160,7 @@ import { useRouter } from 'vue-router'
 
 import VueDraggable from 'vuedraggable'
 
-import { CARD_LISTS } from './constant'
+import { DRAGGABLE_OPTIONS, CARD_LISTS } from './constant'
 
 export default defineComponent({
   name: 'Lists',
@@ -141,14 +177,29 @@ export default defineComponent({
 
     const listTitle = ref('')
     const isAddingList = ref(false)
+    const isEdittingList = ref(false)
+    const isDraggingList = ref(false)
 
     const cardTitle = ref('')
     const isAddingCard = ref(false)
+    const isDraggingCard = ref(false)
 
     const cardLists = ref([])
     const activeListId = ref(0)
 
-    return { router, listTitle, isAddingList, cardTitle, isAddingCard, cardLists, activeListId }
+    return {
+      router,
+      listTitle,
+      isAddingList,
+      isEdittingList,
+      isDraggingList,
+      cardTitle,
+      isAddingCard,
+      isDraggingCard,
+      cardLists,
+      activeListId,
+      DRAGGABLE_OPTIONS
+    }
   },
   created() {
     this.getCardLists()
@@ -157,7 +208,21 @@ export default defineComponent({
     getCardLists() {
       this.cardLists = CARD_LISTS
     },
-    cardClickedHandler() {},
+    cardClickedHandler() {
+      console.log(123)
+    },
+    startDragListHandler() {
+      this.isDraggingList = true
+    },
+    endDragListHandler() {
+      this.isDraggingList = false
+    },
+    startDragCardHandler() {
+      this.isDraggingCard = true
+    },
+    endDragCardHandler() {
+      this.isDraggingCard = false
+    },
     backHandler() {
       const { router } = this
 
@@ -341,6 +406,23 @@ export default defineComponent({
       &-button {
         width: 100%;
       }
+    }
+
+    .flip-list-move,
+    .flip-card-move {
+      transition: transform 0.5s;
+    }
+
+    .sortable-chosen,
+    .sortable-drag {
+      &.sortable-ghost {
+        transform-origin: center;
+        transform: rotate(3deg);
+      }
+    }
+
+    .sortable-ghost {
+      opacity: 0;
     }
   }
 }
