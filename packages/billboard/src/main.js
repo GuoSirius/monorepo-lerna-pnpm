@@ -4,6 +4,8 @@ import 'element-plus/lib/theme-chalk/index.css'
 // import 'element-plus/packages/theme-chalk/src/index.scss'
 // import '@/assets/scss/element-ui.scss'
 
+import 'animate.css'
+
 import './assets/scss/common.scss'
 import './assets/scss/element-ui.scss'
 
