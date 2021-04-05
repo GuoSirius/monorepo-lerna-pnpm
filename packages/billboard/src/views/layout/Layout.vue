@@ -51,17 +51,22 @@
         <router-view />
       </el-main>
     </el-container>
+
+    <billboard-dialog v-model:visible="isVisibleForBillboard" />
   </el-container>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { MENU_LISTS } from './constant'
 
 export default defineComponent({
   name: 'Layout',
+  components: {
+    BillboardDialog: defineAsyncComponent(() => import('@/views/index/BillboardDialog.vue'))
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -69,10 +74,14 @@ export default defineComponent({
     const keywords = ref('')
     const activePath = ref(route.fullPath)
 
-    return { route, router, keywords, activePath, MENU_LISTS }
+    const isVisibleForBillboard = ref(false)
+
+    return { route, router, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
   },
   methods: {
-    newBillboardHandler() {},
+    newBillboardHandler() {
+      this.isVisibleForBillboard = true
+    },
     menuClickedHandler(params) {
       const { router } = this
       const { index } = params

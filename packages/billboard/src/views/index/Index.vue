@@ -60,11 +60,13 @@
         </div>
       </div>
     </div>
+
+    <billboard-dialog v-model:visible="isVisibleForBillboard" />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { LIST_TYPE_ALL } from './constant'
@@ -81,12 +83,17 @@ export default defineComponent({
       default: LIST_TYPE_ALL
     }
   },
+  components: {
+    BillboardDialog: defineAsyncComponent(() => import('./BillboardDialog.vue'))
+  },
   setup() {
     const router = useRouter()
 
     const recentMaturityLists = ref([])
 
-    return { router, recentMaturityLists }
+    const isVisibleForBillboard = ref(false)
+
+    return { router, recentMaturityLists, isVisibleForBillboard }
   },
   methods: {
     viewCardHandler() {},
