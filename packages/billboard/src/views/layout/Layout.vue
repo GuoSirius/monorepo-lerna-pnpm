@@ -48,7 +48,7 @@
       </el-aside>
 
       <el-main class="main">
-        <router-view ref="page" />
+        <router-view />
       </el-main>
     </el-container>
 
@@ -62,6 +62,8 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { MENU_LISTS } from './constant'
 
+import { mapMutations } from 'vuex'
+
 export default defineComponent({
   name: 'Layout',
   components: {
@@ -71,19 +73,17 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
-    const page = ref(null)
     const keywords = ref('')
     const activePath = ref(route.fullPath)
 
     const isVisibleForBillboard = ref(false)
 
-    return { route, router, page, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
+    return { route, router, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
   },
   methods: {
+    ...mapMutations(['setRefreshTime']),
     confirmHandler() {
-      const { page } = this
-
-      console.log(page)
+      this.setRefreshTime()
     },
     newBillboardHandler() {
       this.isVisibleForBillboard = true

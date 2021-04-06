@@ -9,12 +9,13 @@ import 'animate.css'
 import './assets/scss/common.scss'
 import './assets/scss/element-ui.scss'
 
-// import './service/vue-devtools'
+import './service/vue-devtools'
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 
 import locale from 'element-plus/lib/locale'
 import lang from 'element-plus/lib/locale/lang/zh-cn'
+import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 
 import App from './App.vue'
@@ -26,6 +27,8 @@ import './model'
 locale.use(lang)
 
 const app = createApp(App)
+
+app.config.globalProperties.$formatSlashedDate = datetime => dayjs(datetime).format('mm/dd/yyyy')
 
 app.use(store).use(router).use(ElementPlus, { locale: lang, size: 'small', zIndex: 20210326 })
 

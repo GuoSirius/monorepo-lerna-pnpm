@@ -9,10 +9,23 @@ export default class CardDetailModel extends CamoModel {
 
   scheme() {
     super.schema({
-      name: {
-        type: String,
-        unique: true,
-        required: true
+      description: {
+        type: String
+      },
+      maturityTime: {
+        type: Date
+      },
+      createTime: {
+        type: Date,
+        default: Date.now
+      },
+      updateTime: {
+        type: Date,
+        default: Date.now
+      },
+      deleteTime: {
+        type: Date,
+        default: null
       }
     })
   }

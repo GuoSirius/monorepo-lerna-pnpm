@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     custom-class="wrapper"
-    title="新建看板"
+    title="新建卡片"
     v-model="isVisible"
     width="512px"
     top="auto"

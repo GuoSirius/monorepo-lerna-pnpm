@@ -40,6 +40,7 @@
     "moment": "^2.29.1",
     "nedb": "^1.8.0",
     "normalize.css": "^8.0.1",
+    "regenerator-runtime": "^0.13.7",
     "reset-css": "^5.0.1",
     "sortablejs": "^1.13.0",
     "swiper": "^6.5.0",

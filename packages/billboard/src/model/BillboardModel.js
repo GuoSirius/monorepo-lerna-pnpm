@@ -21,6 +21,10 @@ export default class BillboardModel extends CamoModel {
       updateTime: {
         type: Date,
         default: Date.now
+      },
+      deleteTime: {
+        type: Date,
+        default: null
       }
     })
   }
