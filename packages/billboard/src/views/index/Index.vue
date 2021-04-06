@@ -3,10 +3,10 @@
     <div class="recent-maturity">
       <h3 class="recent-maturity-title">最近到期的卡片</h3>
       <div v-if="recentMaturityLists.length" class="recent-maturity-box">
-        <el-card v-for="index in 15" :key="index" class="card" @click.stop="viewCardHandler">
+        <el-card v-for="item in recentMaturityLists" :key="item.id" class="card" @click.stop="viewCardHandler(item)">
           <template #header>
             <div class="card-header">
-              <p class="card-datetime"><i class="el-icon-time"></i><span>3/26/2021</span></p>
+              <p class="card-datetime"><i class="el-icon-time"></i><span>{{ item.createTime }}</span></p>
 
               <el-popover width="100px" trigger="focus" placement="right">
                 <template #reference>
@@ -14,15 +14,15 @@
                 </template>
 
                 <ul class="card-actions">
-                  <li class="card-action">重命名卡片</li>
-                  <li class="card-action">删除卡片</li>
-                  <li class="card-action">完成卡片</li>
+                  <li class="card-action" @click.stop="renameCardHandler(item)">重命名卡片</li>
+                  <li class="card-action" @click.stop="deleteCardHandler(item)">删除卡片</li>
+                  <li class="card-action" @click.stop="completeCardHandler(item)">完成卡片</li>
                 </ul>
               </el-popover>
             </div>
           </template>
           <div class="card-body">
-            <p class="card-body-title">标题</p>
+            <p class="card-body-title">{{ item.name }}</p>
           </div>
         </el-card>
       </div>
@@ -32,10 +32,10 @@
     <div class="all">
       <h3 class="all-title">{{ title }}</h3>
       <div class="all-box">
-        <el-card v-for="index in 5" :key="index" class="card" @click.stop="viewBillboardHandler">
+        <el-card v-for="item in billboardLists" :key="item.id" class="card" @click.stop="viewBillboardHandler(item)">
           <template #header>
             <div class="card-header">
-              <p class="card-datetime"><span>创建于</span><i class="el-icon-date"></i><span>3/26/2021</span></p>
+              <p class="card-datetime"><span>创建于</span><i class="el-icon-date"></i><span>{{ item.createTime }}</span></p>
 
               <el-popover width="100px" trigger="focus" placement="right">
                 <template #reference>
@@ -43,15 +43,15 @@
                 </template>
 
                 <ul class="card-actions">
-                  <li class="card-action">重命名标题</li>
-                  <li class="card-action">删除看板</li>
-                  <li class="card-action">完成看板</li>
+                  <li class="card-action" @click.stop="renameBillboardHandler(item)">重命名标题</li>
+                  <li class="card-action" @click.stop="deleteBillboardHandler(item)">删除看板</li>
+                  <li class="card-action" @click.stop="completeBillboardHandler(item)">完成看板</li>
                 </ul>
               </el-popover>
             </div>
           </template>
           <div class="card-body">
-            <p class="card-body-title">标题标题标题标题标题标题标题标题标题标题标题标题标题</p>
+            <p class="card-body-title">{{ item.name }}</p>
           </div>
         </el-card>
 
@@ -61,13 +61,15 @@
       </div>
     </div>
 
-    <billboard-dialog v-model:visible="isVisibleForBillboard" />
+    <billboard-dialog v-model:visible="isVisibleForBillboard" @confirm="confirmBillboardHandler" />
   </div>
 </template>
 
 <script>
 import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+import { getBillboardLists } from '@/api/index'
 
 import { LIST_TYPE_ALL } from './constant'
 
@@ -89,20 +91,47 @@ export default defineComponent({
   setup() {
     const router = useRouter()
 
+    const billboardLists = ref([])
     const recentMaturityLists = ref([])
 
     const isVisibleForBillboard = ref(false)
 
-    return { router, recentMaturityLists, isVisibleForBillboard }
+    return { router, billboardLists, recentMaturityLists, isVisibleForBillboard }
+  },
+  created() {
+    this.getLists()
   },
   methods: {
-    viewCardHandler() {},
-    viewBillboardHandler() {
-      const { router } = this
-
-      router.push({ path: '/lists' })
+    getLists() {
+      this.getBillboardLists()
     },
-    newBillboardHandler() {}
+    getBillboardLists() {
+      getBillboardLists().then(lists => {
+        console.log(lists)
+
+        this.billboardLists = lists
+        this.recentMaturityLists = []
+      })
+    },
+    viewCardHandler() {},
+    renameCardHandler() {},
+    deleteCardHandler() {},
+    completeCardHandler() {},
+    newBillboardHandler() {
+      this.isVisibleForBillboard = true
+    },
+    confirmBillboardHandler() {
+      this.getBillboardLists()
+    },
+    viewBillboardHandler(item) {
+      const { router } = this
+      const { id } = item
+
+      router.push({ path: `/lists/${id}` })
+    },
+    renameBillboardHandler() {},
+    deleteBillboardHandler() {},
+    completeBillboardHandler() {}
   }
 })
 </script>

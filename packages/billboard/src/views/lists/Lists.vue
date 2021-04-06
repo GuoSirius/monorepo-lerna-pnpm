@@ -18,6 +18,7 @@
           type: 'transition-group',
           name: isDraggingList ? null : 'flip-list'
         }"
+        disabled
         item-key="title"
         group="card-list"
         class="main-lists"
@@ -167,8 +168,7 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      default: ''
-      // required: true
+      required: true
     }
   },
   components: { VueDraggable },

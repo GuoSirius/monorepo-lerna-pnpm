@@ -48,11 +48,11 @@
       </el-aside>
 
       <el-main class="main">
-        <router-view />
+        <router-view ref="page" />
       </el-main>
     </el-container>
 
-    <billboard-dialog v-model:visible="isVisibleForBillboard" />
+    <billboard-dialog v-model:visible="isVisibleForBillboard" @confirm="confirmHandler" />
   </el-container>
 </template>
 
@@ -71,14 +71,20 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
+    const page = ref(null)
     const keywords = ref('')
     const activePath = ref(route.fullPath)
 
     const isVisibleForBillboard = ref(false)
 
-    return { route, router, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
+    return { route, router, page, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
   },
   methods: {
+    confirmHandler() {
+      const { page } = this
+
+      console.log(page)
+    },
     newBillboardHandler() {
       this.isVisibleForBillboard = true
     },

@@ -1,6 +1,6 @@
 import CamoModel from './CamoModel'
 
-export default class BillboardModel extends CamoModel {
+export default class CardModel extends CamoModel {
   constructor() {
     super()
 
@@ -13,14 +13,6 @@ export default class BillboardModel extends CamoModel {
         type: String,
         unique: true,
         required: true
-      },
-      createTime: {
-        type: Date,
-        default: Date.now
-      },
-      updateTime: {
-        type: Date,
-        default: Date.now
       }
     })
   }

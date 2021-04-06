@@ -30,7 +30,7 @@ const routes = [
     ]
   },
   {
-    path: '/lists',
+    path: '/lists/:id',
     name: 'lists',
     component: () => import(/* webpackChunkName: "lists" */ '@/views/lists/Lists.vue'),
     props: route => ({ ...route.query, ...route.params }),

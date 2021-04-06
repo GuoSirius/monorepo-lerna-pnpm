@@ -38,3 +38,7 @@ export function createTable(filename, useLowDB = false, useODM = true) {
 
   return Promise.resolve(table)
 }
+
+export function selectTable(...rest) {
+  return createTable(...rest)
+}
