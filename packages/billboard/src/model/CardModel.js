@@ -9,9 +9,16 @@ export default class CardModel extends CamoModel {
 
   scheme() {
     super.schema({
+      billboardId: {
+        type: String,
+        required: true
+      },
+      listId: {
+        type: String,
+        required: true
+      },
       name: {
         type: String,
-        unique: true,
         required: true
       },
       description: {
@@ -19,6 +26,14 @@ export default class CardModel extends CamoModel {
       },
       maturityTime: {
         type: Date
+      },
+      order: {
+        type: Number,
+        default: 0
+      },
+      isCompleted: {
+        type: Boolean,
+        default: false
       },
       createTime: {
         type: Date,

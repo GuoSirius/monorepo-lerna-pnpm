@@ -19,28 +19,36 @@
           name: isDraggingList ? null : 'flip-list'
         }"
         disabled
-        item-key="title"
+        item-key="_id"
         group="card-list"
         class="main-lists"
-        v-bind="{ ...DRAGGABLE_OPTIONS, handle: '.main-header' }"
+        v-bind="{ ...DRAGGABLE_OPTIONS, handle: '.main-header==' }"
         @start="startDragListHandler"
         @end="endDragListHandler"
       >
-        <template #item="{ element: item, index: listIndex }">
-          <div :key="item.title" class="main-item">
-            <div class="main-header">
-              <h2 class="main-header-title">{{ item.title }}</h2>
+        <template #item="{ element: item }">
+          <div :key="item._id" class="main-item">
+            <div class="main-header" @click.stop="renameListHandler(item)">
+              <!-- <h2 class="main-header-title">{{ item.name }}</h2> -->
+              <el-input
+                v-model="item.name"
+                autofocus
+                :readonly="!isEdittingList || item._id !== activeListId"
+                placeholder=""
+                class="main-header-title"
+                @change="changeListNameHandler"
+              />
               <span class="main-header-count">({{ item.lists?.length || 0 }})</span>
 
-              <el-popover width="100px" trigger="focus" placement="right">
+              <el-popover :key="item._id" width="100px" trigger="hover" placement="right">
                 <template #reference>
                   <i tabindex="-1" class="el-icon-more main-more main-header-more" @click.stop></i>
                 </template>
 
                 <ul class="main-actions">
-                  <li class="main-action">重命名列表</li>
-                  <li class="main-action">删除列表</li>
-                  <li class="main-action">完成列表</li>
+                  <li class="main-action" @click.stop="renameListHandler(item)">重命名列表</li>
+                  <li class="main-action" @click.stop="deleteListHandler(item)">删除列表</li>
+                  <li class="main-action" @click.stop="completeListHandler(item)">完成列表</li>
                 </ul>
               </el-popover>
             </div>
@@ -53,25 +61,25 @@
                   type: 'transition-group',
                   name: isDraggingCard ? null : 'flip-card'
                 }"
-                item-key="title"
+                item-key="_id"
                 group="card-item"
                 class="lists"
                 v-bind="DRAGGABLE_OPTIONS"
                 @start="startDragCardHandler"
                 @end="endDragCardHandler"
               >
-                <template #item="{ element, index }">
-                  <li :key="element.title" class="item" @click.stop="cardClickedHandler(item, index, listIndex)">
-                    {{ element.title }}
+                <template #item="{ element }">
+                  <li :key="element._id" class="item" @click.stop="cardClickedHandler(element)">
+                    {{ element.name }}
 
-                    <el-popover width="100px" trigger="focus" placement="right">
+                    <el-popover :key="element._id" width="100px" trigger="hover" placement="right">
                       <template #reference>
                         <i tabindex="-1" class="el-icon-more main-more main-card-more" @click.stop></i>
                       </template>
 
                       <ul class="main-actions">
-                        <li class="main-action">删除卡片</li>
-                        <li class="main-action">完成卡片</li>
+                        <li class="main-action" @click.stop="deleteCardHandler(element)">删除卡片</li>
+                        <li class="main-action" @click.stop="completeCardHandler(element)">完成卡片</li>
                       </ul>
                     </el-popover>
                   </li>
@@ -79,7 +87,7 @@
               </vue-draggable>
 
               <div class="new-card">
-                <div v-if="listIndex === activeListId && isAddingCard" class="main-form">
+                <div v-if="item._id === activeListId && isAddingCard" class="main-form">
                   <el-input
                     v-model="cardTitle"
                     :autosize="{ minRows: 3 }"
@@ -110,7 +118,7 @@
                   icon="el-icon-plus"
                   round
                   class="new-card-button"
-                  @click.stop="newCardHandler(item, listIndex)"
+                  @click.stop="newCardHandler(item)"
                   >新建卡片</el-button
                 >
               </div>
@@ -152,26 +160,39 @@
         </template>
       </vue-draggable>
     </el-main>
+
+    <card-dialog v-model:visible="isVisibleForCard" :card-information="activeCard" @confirm="confirmCardHandler" />
   </el-container>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import VueDraggable from 'vuedraggable'
 
-import { DRAGGABLE_OPTIONS, CARD_LISTS } from './constant'
+import {
+  addList,
+  editList,
+  deleteList,
+  getListLists,
+  addCard,
+  deleteCard,
+  changeCardStatusById,
+  changeCardStatusByListId
+} from '@/api/lists'
+
+import { DRAGGABLE_OPTIONS } from './constant'
 
 export default defineComponent({
   name: 'Lists',
   props: {
-    id: {
+    billboardId: {
       type: String,
       required: true
     }
   },
-  components: { VueDraggable },
+  components: { VueDraggable, CardDialog: defineAsyncComponent(() => import('./CardDialog.vue')) },
   setup() {
     const router = useRouter()
 
@@ -183,9 +204,11 @@ export default defineComponent({
     const cardTitle = ref('')
     const isAddingCard = ref(false)
     const isDraggingCard = ref(false)
+    const isVisibleForCard = ref(false)
 
     const cardLists = ref([])
-    const activeListId = ref(0)
+    const activeCard = ref({})
+    const activeListId = ref('')
 
     return {
       router,
@@ -196,7 +219,9 @@ export default defineComponent({
       cardTitle,
       isAddingCard,
       isDraggingCard,
+      isVisibleForCard,
       cardLists,
+      activeCard,
       activeListId,
       DRAGGABLE_OPTIONS
     }
@@ -206,10 +231,18 @@ export default defineComponent({
   },
   methods: {
     getCardLists() {
-      this.cardLists = CARD_LISTS
+      getListLists()
+        .then(lists => {
+          this.cardLists = lists
+        })
+        .catch(error => this.$message.error(error.message))
     },
-    cardClickedHandler() {
-      console.log(123)
+    cardClickedHandler(card) {
+      this.activeCard = card
+      this.isVisibleForCard = true
+    },
+    confirmCardHandler() {
+      this.getListLists()
     },
     startDragListHandler() {
       this.isDraggingList = true
@@ -230,33 +263,109 @@ export default defineComponent({
     },
     addListHandler() {
       this.isAddingList = true
+      this.isEdittingList = false
       this.isAddingCard = false
     },
     addListCancelHandler() {
       this.isAddingList = false
     },
     addListConfirmHandler() {
-      const { cardLists, listTitle } = this
+      const { billboardId, listTitle } = this
 
-      cardLists.push({ title: listTitle, lists: [] })
+      addList(billboardId, listTitle)
+        .then(() => this.getCardLists())
+        .catch(error => this.$message.error(error.message))
 
       this.listTitle = ''
     },
-    newCardHandler(item, listIndex) {
-      this.activeListId = listIndex
+    changeListNameHandler(name) {
+      const { activeListId } = this
+
+      this.isEdittingList = false
+
+      editList(activeListId, name)
+        .then(() => this.getCardLists())
+        .catch(error => this.$message.error(error.message))
+    },
+    renameListHandler(item) {
+      const { _id } = item
+
+      this.activeListId = _id
 
       this.isAddingList = false
+      this.isEdittingList = true
+      this.isAddingCard = false
+    },
+    deleteListHandler(item) {
+      const { _id } = item
+
+      this.$confirm('您确定要删除这个列表项吗?', '温馨提示', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        distinguishCancelAndClose: true
+      })
+        .then(() => deleteList(_id))
+        .then(() => {
+          this.$message.success('列表项删除成功')
+          this.getCardLists()
+        })
+        .catch(error => console.log(error))
+    },
+    completeListHandler(item) {
+      const { _id } = item
+
+      changeCardStatusByListId(_id)
+        .then(() => {
+          this.$message.success('列表项已完成')
+          this.getCardLists()
+        })
+        .catch(error => this.$message.error(error.message))
+    },
+    newCardHandler(item) {
+      const { _id } = item
+
+      this.activeListId = _id
+
+      this.isAddingList = false
+      this.isEdittingList = false
       this.isAddingCard = true
     },
     newCardCancelHandler() {
       this.isAddingCard = false
     },
     newCardConfirmHandler() {
-      const { cardTitle, activeListId, cardLists } = this
+      const { cardTitle, activeListId, billboardId } = this
 
-      cardLists[activeListId].lists.push({ title: cardTitle })
+      addCard({ billboardId, listId: activeListId, name: cardTitle })
+        .then(() => this.getCardLists())
+        .catch(error => this.$message.error(error.message))
 
       this.cardTitle = ''
+    },
+    deleteCardHandler(card) {
+      const { _id } = card
+
+      this.$confirm('您确定要删除这个卡片吗?', '温馨提示', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        distinguishCancelAndClose: true
+      })
+        .then(() => deleteCard(_id))
+        .then(() => {
+          this.$message.success('卡片删除成功')
+          this.getCardLists()
+        })
+        .catch(error => console.log(error))
+    },
+    completeCardHandler(card) {
+      const { _id } = card
+
+      changeCardStatusById(_id)
+        .then(() => {
+          this.$message.success('卡片已完成')
+          this.getCardLists()
+        })
+        .catch(error => this.$message.error(error.message))
     }
   }
 })
@@ -334,6 +443,21 @@ export default defineComponent({
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+
+        :deep(.el-input__inner) {
+          width: 100%;
+          padding: 0;
+          background-color: transparent;
+
+          &[readonly],
+          &[readonly]:focus {
+            border: none;
+            outline: none;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        }
       }
 
       &-count {
@@ -424,6 +548,22 @@ export default defineComponent({
     .sortable-ghost {
       opacity: 0;
     }
+  }
+}
+
+.main-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-action {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(255, 202, 25, 0.25);
   }
 }
 </style>

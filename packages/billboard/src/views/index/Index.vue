@@ -71,6 +71,8 @@
       :name="name"
       @confirm="confirmBillboardHandler"
     />
+
+    <card-dialog v-model:visible="isVisibleForCard" :card-information="activeCard" @confirm="confirmCardHandler" />
   </div>
 </template>
 
@@ -79,6 +81,7 @@ import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { getBillboardLists, deleteBillboard } from '@/api/index'
+import { deleteCard, changeCardStatusById, changeCardStatusByBillboardId } from '@/api/lists'
 
 import { LIST_TYPE_ALL } from './constant'
 
@@ -119,12 +122,23 @@ export default defineComponent({
     const id = ref('')
     const name = ref('')
 
+    const activeCard = ref({})
     const billboardLists = ref([])
     const recentMaturityLists = ref([{ name: 'demo' }])
 
+    const isVisibleForCard = ref(false)
     const isVisibleForBillboard = ref(false)
 
-    return { router, id, name, billboardLists, recentMaturityLists, isVisibleForBillboard }
+    return {
+      router,
+      id,
+      name,
+      activeCard,
+      billboardLists,
+      recentMaturityLists,
+      isVisibleForCard,
+      isVisibleForBillboard
+    }
   },
   created() {
     this.getLists()
@@ -135,17 +149,45 @@ export default defineComponent({
       this.getRecentMaturityLists()
     },
     getBillboardLists() {
-      getBillboardLists().then(lists => {
-        this.billboardLists = lists
-      })
+      getBillboardLists()
+        .then(lists => {
+          this.billboardLists = lists
+        })
+        .catch(error => this.$message.error(error.message))
     },
     getRecentMaturityLists() {
       this.recentMaturityLists = [{ name: 'baby' }]
     },
-    viewCardHandler() {},
-    renameCardHandler() {},
-    deleteCardHandler() {},
-    completeCardHandler() {},
+    viewCardHandler(card) {
+      this.activeCard = card
+      this.isVisibleForCard = true
+    },
+    confirmCardHandler() {
+      this.getLists()
+    },
+    renameCardHandler(card) {
+      this.viewCardHandler(card)
+    },
+    deleteCardHandler(card) {
+      const { _id } = card
+
+      deleteCard(_id)
+        .then(() => {
+          this.getLists()
+          this.$message.success('卡片删除成功')
+        })
+        .catch(error => this.$message.error(error.message))
+    },
+    completeCardHandler(card) {
+      const { _id } = card
+
+      changeCardStatusById(_id)
+        .then(() => {
+          this.getLists()
+          this.$message.success('卡片已完成')
+        })
+        .catch(error => this.$message.error(error.message))
+    },
     newBillboardHandler() {
       this.isVisibleForBillboard = true
     },
@@ -168,19 +210,28 @@ export default defineComponent({
     deleteBillboardHandler(item) {
       const { _id } = item
 
-      this.$confirm('您确定要删除这个卡片吗?', '温馨提示', {
+      this.$confirm('您确定要删除这个看板吗?', '温馨提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
         distinguishCancelAndClose: true
       })
         .then(() => deleteBillboard(_id))
         .then(() => {
-          this.$message.success('卡片删除成功')
+          this.$message.success('看板删除成功')
           this.getLists()
         })
         .catch(error => console.log(error))
     },
-    completeBillboardHandler() {}
+    completeBillboardHandler(item) {
+      const { _id } = item
+
+      changeCardStatusByBillboardId(_id)
+        .then(() => {
+          this.getLists()
+          this.$message.success('看板已完成')
+        })
+        .catch(error => this.$message.error(error.message))
+    }
   }
 })
 </script>

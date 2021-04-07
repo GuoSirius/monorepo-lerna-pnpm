@@ -24,7 +24,7 @@ export async function deleteBillboard(id, isHardDelete = false) {
 
   return isHardDelete
     ? BillboardModel.deleteOne({ _id: id })
-    : BillboardModel.findOneAndUpdate({ _id: id }, { deleteTime: new Date() })
+    : BillboardModel.findOneAndUpdate({ _id: id }, { updateTime: new Date(), deleteTime: new Date() })
 }
 
 // 获取 看板列表

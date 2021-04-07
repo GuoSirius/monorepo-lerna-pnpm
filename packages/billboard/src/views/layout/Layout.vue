@@ -62,10 +62,21 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { MENU_LISTS } from './constant'
 
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'Layout',
+  computed: {
+    ...mapState(['name']),
+    keywords: {
+      get() {
+        return this.name
+      },
+      set(val) {
+        this.setName(val)
+      }
+    }
+  },
   components: {
     BillboardDialog: defineAsyncComponent(() => import('@/views/index/BillboardDialog.vue'))
   },
@@ -73,15 +84,14 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
-    const keywords = ref('')
     const activePath = ref(route.fullPath)
 
     const isVisibleForBillboard = ref(false)
 
-    return { route, router, keywords, activePath, isVisibleForBillboard, MENU_LISTS }
+    return { route, router, activePath, isVisibleForBillboard, MENU_LISTS }
   },
   methods: {
-    ...mapMutations(['setRefreshTime']),
+    ...mapMutations(['setName', 'setRefreshTime']),
     confirmHandler() {
       this.setRefreshTime()
     },

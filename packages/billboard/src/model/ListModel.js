@@ -9,10 +9,17 @@ export default class ListModel extends CamoModel {
 
   scheme() {
     super.schema({
+      billboardId: {
+        type: String,
+        required: true
+      },
       name: {
         type: String,
-        unique: true,
         required: true
+      },
+      order: {
+        type: Number,
+        default: 0
       },
       createTime: {
         type: Date,

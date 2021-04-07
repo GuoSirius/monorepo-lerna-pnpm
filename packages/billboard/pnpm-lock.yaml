@@ -1243,8 +1243,8 @@ packages:
       integrity: sha512-tAag0jEcjwH+P2quUfipd7liWCNX2F8NvYjQp2wtInsZxnMlypdw0FtAOLxtvvkO+GSRRbmNi8m/5y42PQJYCQ==
   /@intervolga/optimize-cssnano-plugin/1.0.6_webpack@4.46.0:
     dependencies:
-      cssnano: 4.1.10
-      cssnano-preset-default: 4.0.7
+      cssnano: 4.1.11
+      cssnano-preset-default: 4.0.8
       postcss: 7.0.35
       webpack: 4.46.0
     dev: true
@@ -1756,7 +1756,7 @@ packages:
       cliui: 6.0.0
       copy-webpack-plugin: 5.1.2_webpack@4.46.0
       css-loader: 3.6.0_webpack@4.46.0
-      cssnano: 4.1.10
+      cssnano: 4.1.11
       debug: 4.3.1
       default-gateway: 5.0.5
       dotenv: 8.2.0
@@ -2296,7 +2296,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-5teOsQWABXHHBFP9y3skS5P3d/WfWXpv3FUpy+LorMrNYaT9pI4oLMQX7jzQ2KklNpGpWHzdCXTDT2Y3XGlZBw==
-  /anymatch/3.1.1:
+  /anymatch/3.1.2:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.2.2
@@ -2304,7 +2304,7 @@ packages:
     engines:
       node: '>= 8'
     resolution:
-      integrity: sha512-mM8522psRCqzV+6LhomX5wgp25YVibjh8Wj23I5RPkPppSVSjyKD2A2mBJmWGa+KN7f2D6LNh9jkBCeyLktzjg==
+      integrity: sha512-P43ePfOAIupkguHUycrc4qJ9kz8ZiuOUijaETwX7THt0Y/GNK7v0aa8rY816xWjZ7rJdA5XdMcpVFTKMq+RvWg==
   /app-builder-bin/3.5.12:
     dev: true
     resolution:
@@ -2628,10 +2628,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-MasayLEpNjRj41s+u2n038+6eUc=
-  /balanced-match/1.0.1:
+  /balanced-match/1.0.2:
     dev: true
     resolution:
-      integrity: sha512-qyTw2VPYRg31SlVU5WDdvCSyMTJ3YSP4Kz2CidWZFPFawCiHJdCyKyZeXIGMJ5ebMQYXEI56kDR8tcnDkbZstg==
+      integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
   /base/0.11.2:
     dependencies:
       cache-base: 1.0.1
@@ -2877,7 +2877,7 @@ packages:
       integrity: sha512-49VBlw+PrWEF51aCmy7QIteYPIFZxSpvqBdP/2itCPPlJ49kj9zg/XPRFrdkne2W+CfwXUls8exMvu1RysZpKA==
   /brace-expansion/1.1.11:
     dependencies:
-      balanced-match: 1.0.1
+      balanced-match: 1.0.2
       concat-map: 0.0.1
     dev: true
     resolution:
@@ -2970,7 +2970,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001207
       colorette: 1.2.2
-      electron-to-chromium: 1.3.708
+      electron-to-chromium: 1.3.709
       escalade: 3.1.1
       node-releases: 1.1.71
     dev: true
@@ -3119,7 +3119,7 @@ packages:
       rimraf: 2.7.1
       ssri: 6.0.1
       unique-filename: 1.1.1
-      y18n: 4.0.1
+      y18n: 4.0.2
     dev: true
     resolution:
       integrity: sha512-a0tMB40oefvuInr4Cwb3GerbL9xTj1D5yg0T5xrjGCGyfvbxseIXX7BAO/u/hIXdafzOI5JC3wDwHyf24buOAQ==
@@ -3375,7 +3375,7 @@ packages:
       integrity: sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==
   /chokidar/3.5.1:
     dependencies:
-      anymatch: 3.1.1
+      anymatch: 3.1.2
       braces: 3.0.2
       glob-parent: 5.1.2
       is-binary-path: 2.1.0
@@ -4135,7 +4135,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
-  /cssnano-preset-default/4.0.7:
+  /cssnano-preset-default/4.0.8:
     dependencies:
       css-declaration-sorter: 4.0.1
       cssnano-util-raw-cache: 4.0.1
@@ -4165,13 +4165,13 @@ packages:
       postcss-ordered-values: 4.1.2
       postcss-reduce-initial: 4.0.3
       postcss-reduce-transforms: 4.0.2
-      postcss-svgo: 4.0.2
+      postcss-svgo: 4.0.3
       postcss-unique-selectors: 4.0.1
     dev: true
     engines:
       node: '>=6.9.0'
     resolution:
-      integrity: sha512-x0YHHx2h6p0fCl1zY9L9roD7rnlltugGu7zXSKQx6k2rYw0Hi3IqxcoAGF7u9Q5w1nt7vK0ulxV8Lo+EvllGsA==
+      integrity: sha512-LdAyHuq+VRyeVREFmuxUZR1TXjQm8QQU/ktoo/x7bz+SdOge1YKc5eMN6pRW7YWBmyq59CqYba1dJ5cUukEjLQ==
   /cssnano-util-get-arguments/4.0.0:
     dev: true
     engines:
@@ -4198,17 +4198,17 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-WcKx5OY+KoSIAxBW6UBBRay1U6vkYheCdjyVNDm85zt5K9mHoGOfsOsqIszfAqrQQFIIKgjh2+FDgIj/zsl21Q==
-  /cssnano/4.1.10:
+  /cssnano/4.1.11:
     dependencies:
       cosmiconfig: 5.2.1
-      cssnano-preset-default: 4.0.7
+      cssnano-preset-default: 4.0.8
       is-resolvable: 1.1.0
       postcss: 7.0.35
     dev: true
     engines:
       node: '>=6.9.0'
     resolution:
-      integrity: sha512-5wny+F6H4/8RgNlaqab4ktc3e0/blKutmq8yNlBFXA//nSFFAqAngjNVRzUvCgYROULmZZUoosL/KSoZo5aUaQ==
+      integrity: sha512-6gZm2htn7xIPJOHY824ERgj8cNPgPxyCSnkXc4v7YvNW+TdVfzgngHcEhy/8D11kUWRUMbke+tC+AUcUsnMz2g==
   /csso/4.2.0:
     dependencies:
       css-tree: 1.1.3
@@ -4796,10 +4796,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dHyuazv3P3j1Xyv7pdwTwAvxWab2pCb0G0Oa6qWQoCc4b1/mRGY00M7AvYW1cPuUijj9zYAf1HmXfM6MifaMlA==
-  /electron-to-chromium/1.3.708:
+  /electron-to-chromium/1.3.709:
     dev: true
     resolution:
-      integrity: sha512-+A8ggYZ5riOLMcVAuzHx6bforaPzaiLnW1QOMD2SlMYQVi7QQTyQ/WrlZoebIH9ikmgr+tLJGpNITFFCUiQcPw==
+      integrity: sha512-LolItk2/ikSGQ7SN8UkuKVNMBZp3RG7Itgaxj1npsHRzQobj9JjMneZOZfLhtwlYBe5fCJ75k+cVCiDFUs23oA==
   /electron-updater/4.3.8:
     dependencies:
       '@types/semver': 7.3.4
@@ -6508,10 +6508,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
-  /html-comment-regex/1.1.2:
-    dev: true
-    resolution:
-      integrity: sha512-P+M65QY2JQ5Y0G9KKdlDpo0zK+/OHptU5AaBwUfAIDJZk1MYf32Frm84EcOytfJE0t5JvkAnKlmjsXDnWzCJmQ==
   /html-entities/1.4.0:
     dev: true
     resolution:
@@ -7286,14 +7282,6 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-buY6VNRjhQMiF1qWDouloZlQbRhDPCebwxSjxMjxgemYT46YMd2NR0/H+fBhEfWX4A/w9TBJ+ol+okqJKFE6vQ==
-  /is-svg/3.0.0:
-    dependencies:
-      html-comment-regex: 1.1.2
-    dev: true
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha512-gi4iHK53LR2ujhLVVj+37Ykh9GLqYHX6JOVXbLAucaG/Cqw9xwdFOjDM2qeifLs1sF1npXXFvDu0r5HNgCMrzQ==
   /is-symbol/1.0.3:
     dependencies:
       has-symbols: 1.0.2
@@ -9665,9 +9653,8 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-gjMeXBempyInaBqpp8gODmwZ52WaYsVOsfr4L4lDQ7n3ncD6mEyySiDtgzCT+NYC0mmeOLvtsF8iaEf0YT6dBw==
-  /postcss-svgo/4.0.2:
+  /postcss-svgo/4.0.3:
     dependencies:
-      is-svg: 3.0.0
       postcss: 7.0.35
       postcss-value-parser: 3.3.1
       svgo: 1.3.2
@@ -9675,7 +9662,7 @@ packages:
     engines:
       node: '>=6.9.0'
     resolution:
-      integrity: sha512-C6wyjo3VwFm0QgBy+Fu7gCYOkCmgmClghO+pjcxvrcBKtiKt0uCF+hvbMO1fyv5BMImRK90SMb+dwUnfbGd+jw==
+      integrity: sha512-NoRbrcMWTtUghzuKSoIm6XV+sJdvZ7GZSc3wdBN0W19FTtp2ko8NqLsgoh/m9CzNhU3KLPvQmjIwtaNFkaFTvw==
   /postcss-unique-selectors/4.0.1:
     dependencies:
       alphanum-sort: 1.0.2
@@ -12757,16 +12744,18 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  /y18n/4.0.1:
-    dev: true
-    resolution:
-      integrity: sha512-wNcy4NvjMYL8gogWWYAO7ZFWFfHcbdbE57tZO8e4cbpj8tfUcwrwqSl3ad8HxpYWCdXcJUCeKKZS62Av1affwQ==
-  /y18n/5.0.6:
+  /y18n/4.0.2:
     dev: true
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-PlVX4Y0lDTN6E2V4ES2tEdyvXkeKzxa8c/vo0pxPr/TqbztddTP0yn7zZylIyiAuxerqj0Q5GhpJ1YJCP8LaZQ==
+      integrity: sha512-DnBDwcL54b5xWMM/7RfFg4xs5amYxq2ot49aUfLjQSAracXkGvlZq0txzqr3Pa6Q0ayuCxBcwTzrPUScKY0O8w==
+  /y18n/5.0.7:
+    dev: true
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-oOhslryvNcA1lB9WYr+M6TMyLkLg81Dgmyb48ZDU0lvR+5bmNDTMz7iobM1QXooaLhbbrcHrlNaABhI6Vo6StQ==
   /yaku/0.16.7:
     dev: true
     resolution:
@@ -12820,7 +12809,7 @@ packages:
       set-blocking: 2.0.0
       string-width: 3.1.0
       which-module: 2.0.0
-      y18n: 4.0.1
+      y18n: 4.0.2
       yargs-parser: 13.1.2
     dev: true
     resolution:
@@ -12836,7 +12825,7 @@ packages:
       set-blocking: 2.0.0
       string-width: 4.2.2
       which-module: 2.0.0
-      y18n: 4.0.1
+      y18n: 4.0.2
       yargs-parser: 18.1.3
     dev: true
     engines:
@@ -12850,7 +12839,7 @@ packages:
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.2
-      y18n: 5.0.6
+      y18n: 5.0.7
       yargs-parser: 20.2.7
     dev: true
     engines:
@@ -12910,13 +12899,13 @@ packages:
     version: 2.0.1
 specifiers:
   '@babel/plugin-syntax-top-level-await': ^7.12.13
-  '@electron/remote': ^1.0.4
+  '@electron/remote': ^1.1.0
   '@vue/cli-plugin-babel': ~4.5.12
   '@vue/cli-plugin-eslint': ~4.5.12
   '@vue/cli-plugin-router': ~4.5.12
   '@vue/cli-plugin-vuex': ~4.5.12
   '@vue/cli-service': ~4.5.12
-  '@vue/compiler-sfc': ^3.0.9
+  '@vue/compiler-sfc': ^3.0.11
   '@vue/devtools': ^6.0.0-beta.6
   '@vue/eslint-config-prettier': ^6.0.0
   animate.css: ^4.1.1
@@ -12925,10 +12914,10 @@ specifiers:
   babel-plugin-import: ^1.13.3
   better-scroll: ^2.2.1
   camo: ^0.12.3
-  core-js: ^3.9.1
+  core-js: ^3.10.0
   dayjs: ^1.10.4
   dns: ^0.2.2
-  electron: ^11.4.1
+  electron: ^11.4.2
   electron-devtools-installer: ^3.1.1
   electron-updater: ^4.3.8
   element-plus: ^1.0.2-beta.36
@@ -12952,10 +12941,10 @@ specifiers:
   sortablejs: ^1.13.0
   stylus: ^0.54.8
   stylus-loader: ^5.0.0
-  swiper: ^6.5.0
-  vue: ^3.0.9
+  swiper: ^6.5.4
+  vue: ^3.0.11
   vue-cli-plugin-electron-builder: ~2.0.0-rc.6
   vue-cli-plugin-element-plus: ^0.0.13
-  vue-router: ^4.0.5
+  vue-router: ^4.0.6
   vuedraggable: ^4.0.1
   vuex: ^4.0.0
