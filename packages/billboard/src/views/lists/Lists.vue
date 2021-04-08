@@ -40,7 +40,14 @@
               />
               <span class="main-header-count">({{ item.lists?.length || 0 }})</span>
 
-              <el-popover :key="item._id" width="100px" trigger="hover" placement="right">
+              <el-popover
+                :key="item._id"
+                :show-after="300"
+                :tabindex="-1"
+                width="100px"
+                trigger="hover"
+                placement="right"
+              >
                 <template #reference>
                   <i tabindex="-1" class="el-icon-more main-more main-header-more" @click.stop></i>
                 </template>
@@ -63,6 +70,7 @@
                 }"
                 item-key="_id"
                 group="card-item"
+                :move="moveCardHandler"
                 class="lists"
                 v-bind="DRAGGABLE_OPTIONS"
                 @start="startDragCardHandler"
@@ -72,7 +80,14 @@
                   <li :key="element._id" class="item" @click.stop="cardClickedHandler(element)">
                     {{ element.name }}
 
-                    <el-popover :key="element._id" width="100px" trigger="hover" placement="right">
+                    <el-popover
+                      :key="element._id"
+                      :show-after="300"
+                      :tabindex="-1"
+                      width="100px"
+                      trigger="hover"
+                      placement="right"
+                    >
                       <template #reference>
                         <i tabindex="-1" class="el-icon-more main-more main-card-more" @click.stop></i>
                       </template>
@@ -236,6 +251,9 @@ export default defineComponent({
           this.cardLists = lists
         })
         .catch(error => this.$message.error(error.message))
+    },
+    moveCardHandler(...rest) {
+      console.log(...rest)
     },
     cardClickedHandler(card) {
       this.activeCard = card
@@ -447,12 +465,13 @@ export default defineComponent({
         :deep(.el-input__inner) {
           width: 100%;
           padding: 0;
-          background-color: transparent;
+          background-color: #fff;
 
           &[readonly],
           &[readonly]:focus {
             border: none;
             outline: none;
+            background-color: transparent;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;

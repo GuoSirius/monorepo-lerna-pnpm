@@ -10,7 +10,14 @@
                 <i class="el-icon-time"></i><span>{{ item.createDate }}</span>
               </p>
 
-              <el-popover :key="item._id" width="100px" trigger="focus" placement="right">
+              <el-popover
+                :key="item._id"
+                :show-after="300"
+                :tabindex="-1"
+                width="100px"
+                trigger="focus"
+                placement="right"
+              >
                 <template #reference>
                   <i tabindex="-1" class="el-icon-more card-more" @click.stop></i>
                 </template>
@@ -41,7 +48,14 @@
                 <span>创建于</span><i class="el-icon-date"></i><span>{{ item.createDate }}</span>
               </p>
 
-              <el-popover :key="item._id" width="100px" trigger="hover" placement="right">
+              <el-popover
+                :key="item._id"
+                :show-after="300"
+                :tabindex="-1"
+                width="100px"
+                trigger="focus"
+                placement="right"
+              >
                 <template #reference>
                   <i tabindex="-1" class="el-icon-more card-more" @click.stop></i>
                 </template>
