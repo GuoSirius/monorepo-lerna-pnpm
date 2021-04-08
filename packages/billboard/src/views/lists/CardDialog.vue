@@ -12,13 +12,35 @@
     @close="closeHandler"
   >
     <el-form ref="form" :model="formModel" label-width="auto" @key.enter.stop.prevent="enterHandler">
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="formModel.name" autofocus placeholder="请输入要新建的看板名称" />
+      <el-form-item label="卡片名称" prop="name">
+        <el-input v-model="formModel.name" autofocus placeholder="请输入要新建的卡片名称" />
       </el-form-item>
 
-      <!-- <el-form-item label="主题色" prop="theme">
-        <el-input v-model="formModel.theme" />
-      </el-form-item> -->
+      <el-form-item label="到期时间" prop="maturityTime">
+        <el-date-picker
+          v-model="formModel.maturityTime"
+          type="datetime"
+          format="YYYY/MM/DD HH:mm"
+          placeholder="添加到期日期"
+        />
+      </el-form-item>
+
+      <el-form-item label="到期提醒" prop="reminderTime">
+        <el-select v-model="formModel.reminderTime" value-key="value" placeholder="添加到期提醒">
+          <el-option v-for="item in MATURITY_REMIND_LISTS" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="卡片描述" prop="description">
+        <el-input
+          v-model="formModel.description"
+          :autosize="{ minRows: 2 }"
+          type="textarea"
+          rows="2"
+          autofocus
+          placeholder="添加描述……"
+        />
+      </el-form-item>
     </el-form>
 
     <template #footer>
@@ -35,23 +57,21 @@
 <script>
 import { defineComponent } from 'vue'
 
-import { addBillboard, editBillboard } from '@/api/index'
+import { editCard } from '@/api/lists'
+
+import { MATURITY_REMIND_LISTS } from './constant'
 
 export default defineComponent({
-  name: 'BillboardDialog',
+  name: 'CardDialog',
   inheritAttrs: false,
   props: {
     visible: {
       type: Boolean,
       default: false
     },
-    id: {
-      type: String,
-      default: ''
-    },
-    name: {
-      type: String,
-      default: ''
+    cardInformation: {
+      type: Object,
+      required: true
     }
   },
   emits: ['update:visible', 'confirm'],
@@ -59,7 +79,9 @@ export default defineComponent({
     return {
       formModel: {
         name: '',
-        theme: ''
+        maturityTime: '',
+        reminderTime: -1,
+        description: ''
       }
     }
   },
@@ -73,31 +95,33 @@ export default defineComponent({
       }
     }
   },
+  created() {
+    this.MATURITY_REMIND_LISTS = MATURITY_REMIND_LISTS
+  },
   methods: {
     enterHandler() {
       this.confirmHandler()
     },
     openHandler() {
-      const { name, formModel } = this
+      const { formModel, cardInformation } = this
+      const { name, maturityTime, reminderTime = -1, description } = cardInformation
 
       formModel.name = name
+      formModel.maturityTime = maturityTime
+      formModel.reminderTime = reminderTime
+      formModel.description = description
     },
     closeHandler() {
-      this.formModel = { name: '', theme: '' }
+      this.formModel = { name: '', maturityTime: '', reminderTime: -1, description: '' }
     },
     cancelHandler() {
       this.isVisible = false
     },
     confirmHandler() {
-      const { id, formModel } = this
-      const { name } = formModel
+      const { formModel, cardInformation } = this
+      const { _id: id } = cardInformation
 
-      let request = null
-
-      if (id) request = editBillboard(id, name)
-      else request = addBillboard(name)
-
-      request
+      editCard({ ...formModel, id })
         .then(() => {
           this.isVisible = false
 

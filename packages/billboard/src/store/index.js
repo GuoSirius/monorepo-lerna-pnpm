@@ -4,12 +4,12 @@ import uniqueId from 'lodash/uniqueId'
 
 export default createStore({
   state: {
-    name: '',
+    keywords: '',
     refreshTime: 0
   },
   mutations: {
-    setName(state, name = '') {
-      state.name = name
+    setKeywords(state, keywords = '') {
+      state.keywords = keywords
     },
     setRefreshTime(state, refreshTime) {
       state.refreshTime = refreshTime ?? `${Date.now()}-${uniqueId('refresh-time-')}`

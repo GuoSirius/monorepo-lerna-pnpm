@@ -44,6 +44,7 @@
     "reset-css": "^5.0.1",
     "sortablejs": "^1.13.0",
     "swiper": "^6.5.0",
+    "underscore": "^1.12.1",
     "vue": "^3.0.9",
     "vue-router": "^4.0.5",
     "vuedraggable": "^4.0.1",

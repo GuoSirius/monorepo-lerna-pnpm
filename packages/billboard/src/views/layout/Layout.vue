@@ -6,7 +6,7 @@
       </div>
       <el-divider direction="vertical" />
       <div class="header-form">
-        <el-input v-model="keywords" placeholder="搜索看板、卡片……" prefix-icon="el-icon-search" />
+        <el-input v-model="name" placeholder="搜索看板、卡片……" prefix-icon="el-icon-search" />
       </div>
     </el-header>
 
@@ -67,13 +67,13 @@ import { mapState, mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Layout',
   computed: {
-    ...mapState(['name']),
-    keywords: {
+    ...mapState(['keywords']),
+    name: {
       get() {
-        return this.name
+        return this.keywords
       },
       set(val) {
-        this.setName(val)
+        this.setKeywords(val)
       }
     }
   },
@@ -91,7 +91,7 @@ export default defineComponent({
     return { route, router, activePath, isVisibleForBillboard, MENU_LISTS }
   },
   methods: {
-    ...mapMutations(['setName', 'setRefreshTime']),
+    ...mapMutations(['setKeywords', 'setRefreshTime']),
     confirmHandler() {
       this.setRefreshTime()
     },

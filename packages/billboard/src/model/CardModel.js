@@ -27,6 +27,10 @@ export default class CardModel extends CamoModel {
       maturityTime: {
         type: Date
       },
+      reminderTime: {
+        type: Number,
+        default: -1
+      },
       order: {
         type: Number,
         default: 0

@@ -7,7 +7,7 @@
           <template #header>
             <div class="card-header">
               <p class="card-datetime">
-                <i class="el-icon-time"></i><span>{{ item.createDate }}</span>
+                <i class="el-icon-time"></i><span>{{ item.maturityDate }}</span>
               </p>
 
               <el-popover
@@ -95,9 +95,9 @@ import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { getBillboardLists, deleteBillboard } from '@/api/index'
-import { deleteCard, changeCardStatusById, changeCardStatusByBillboardId } from '@/api/lists'
+import { deleteCard, changeCardStatusById, changeCardStatusByBillboardId, getRecentMaturityList } from '@/api/lists'
 
-import { LIST_TYPE_ALL } from './constant'
+import { LIST_TYPE_ALL, LIST_TYPE_UNFINISHED, LIST_TYPE_COMPLETED } from './constant'
 
 import { mapState } from 'vuex'
 
@@ -114,9 +114,25 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState(['refreshTime'])
+    ...mapState(['keywords', 'refreshTime']),
+    isCompleted() {
+      const { listType } = this
+
+      let isCompleted = null
+
+      if (listType === LIST_TYPE_COMPLETED) isCompleted = true
+      else if (listType === LIST_TYPE_UNFINISHED) isCompleted = false
+
+      return isCompleted
+    }
   },
   watch: {
+    keywords: {
+      immediate: true,
+      handler(val) {
+        this.getLists(val)
+      }
+    },
     refreshTime() {
       this.getLists()
     },
@@ -128,7 +144,8 @@ export default defineComponent({
     }
   },
   components: {
-    BillboardDialog: defineAsyncComponent(() => import('./BillboardDialog.vue'))
+    BillboardDialog: defineAsyncComponent(() => import('./BillboardDialog.vue')),
+    CardDialog: defineAsyncComponent(() => import('@/views/lists/CardDialog.vue'))
   },
   setup() {
     const router = useRouter()
@@ -154,23 +171,24 @@ export default defineComponent({
       isVisibleForBillboard
     }
   },
-  created() {
-    this.getLists()
-  },
   methods: {
-    getLists() {
-      this.getBillboardLists()
-      this.getRecentMaturityLists()
+    getLists(keywords = this.keywords, isCompleted = this.isCompleted) {
+      this.getBillboardLists(keywords, isCompleted)
+      this.getRecentMaturityLists(keywords)
     },
-    getBillboardLists() {
-      getBillboardLists()
+    getBillboardLists(keywords = this.keywords, isCompleted = this.isCompleted) {
+      getBillboardLists(keywords, isCompleted)
         .then(lists => {
           this.billboardLists = lists
         })
         .catch(error => this.$message.error(error.message))
     },
-    getRecentMaturityLists() {
-      this.recentMaturityLists = [{ name: 'baby' }]
+    getRecentMaturityLists(keywords = this.keywords) {
+      getRecentMaturityList(keywords)
+        .then(lists => {
+          this.recentMaturityLists = lists
+        })
+        .catch(error => this.$message.error(error.message))
     },
     viewCardHandler(card) {
       this.activeCard = card
@@ -210,9 +228,9 @@ export default defineComponent({
     },
     viewBillboardHandler(item) {
       const { router } = this
-      const { _id } = item
+      const { _id, name } = item
 
-      router.push({ path: `/lists/${_id}` })
+      router.push({ path: `/lists/${_id}`, query: { title: name } })
     },
     renameBillboardHandler(item) {
       const { _id, name } = item
@@ -285,6 +303,7 @@ export default defineComponent({
   .card {
     display: flex;
     flex: 0 0 auto;
+    flex-direction: column;
     width: 220px;
     height: 100px;
     margin: 0 16px 16px 0;

@@ -6,7 +6,7 @@
         <i class="header-back-icon el-icon-arrow-left" @click.stop="backHandler"></i>
       </div>
 
-      <p class="header-title">看板标题</p>
+      <p class="header-title">{{ title }}</p>
     </el-header>
 
     <el-main class="main">
@@ -78,7 +78,11 @@
               >
                 <template #item="{ element }">
                   <li :key="element._id" class="item" @click.stop="cardClickedHandler(element)">
-                    {{ element.name }}
+                    <p class="card-item-title">{{ element.name }}</p>
+                    <p v-if="element.isCompleted" class="card-item-status">
+                      <i class="el-icon-check card-item-status-icon"></i>
+                      <span class="card-item-status-text">已完成</span>
+                    </p>
 
                     <el-popover
                       :key="element._id"
@@ -181,6 +185,8 @@
 </template>
 
 <script>
+import debounce from 'lodash/debounce'
+
 import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -194,7 +200,8 @@ import {
   addCard,
   deleteCard,
   changeCardStatusById,
-  changeCardStatusByListId
+  changeCardStatusByListId,
+  updateCardAffiliationAndOrder
 } from '@/api/lists'
 
 import { DRAGGABLE_OPTIONS } from './constant'
@@ -202,6 +209,10 @@ import { DRAGGABLE_OPTIONS } from './constant'
 export default defineComponent({
   name: 'Lists',
   props: {
+    title: {
+      type: String,
+      default: '看板标题'
+    },
     billboardId: {
       type: String,
       required: true
@@ -243,24 +254,29 @@ export default defineComponent({
   },
   created() {
     this.getCardLists()
+    this.debounceUpdateCardAffiliationAndOrder = debounce(updateCardAffiliationAndOrder, 300, {
+      leading: false,
+      trailing: true
+    })
   },
   methods: {
-    getCardLists() {
-      getListLists()
+    getCardLists(billboardId = this.billboardId) {
+      getListLists(billboardId)
         .then(lists => {
           this.cardLists = lists
         })
         .catch(error => this.$message.error(error.message))
     },
-    moveCardHandler(...rest) {
-      console.log(...rest)
+    moveCardHandler() {
+      // const { cardLists } = this
+      // this.debounceUpdateCardAffiliationAndOrder(cardLists)
     },
     cardClickedHandler(card) {
       this.activeCard = card
       this.isVisibleForCard = true
     },
     confirmCardHandler() {
-      this.getListLists()
+      this.getCardLists()
     },
     startDragListHandler() {
       this.isDraggingList = true
@@ -272,7 +288,11 @@ export default defineComponent({
       this.isDraggingCard = true
     },
     endDragCardHandler() {
+      const { cardLists } = this
+
       this.isDraggingCard = false
+
+      this.debounceUpdateCardAffiliationAndOrder(cardLists)
     },
     backHandler() {
       const { router } = this
@@ -352,9 +372,12 @@ export default defineComponent({
       this.isAddingCard = false
     },
     newCardConfirmHandler() {
-      const { cardTitle, activeListId, billboardId } = this
+      const { cardLists, cardTitle, activeListId, billboardId } = this
 
-      addCard({ billboardId, listId: activeListId, name: cardTitle })
+      const cardList = cardLists.find(item => item._id === activeListId)
+      const order = cardList.lists?.length || 0
+
+      addCard({ billboardId, listId: activeListId, name: cardTitle, order })
         .then(() => this.getCardLists())
         .catch(error => this.$message.error(error.message))
 
@@ -548,6 +571,29 @@ export default defineComponent({
     .new-card {
       &-button {
         width: 100%;
+      }
+    }
+
+    .card-item {
+      &-title {
+      }
+
+      &-status {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        &-icon {
+          margin-right: 6px;
+          color: #fff;
+          border-radius: 50%;
+          background-color: rgb(58, 163, 97);
+        }
+
+        &-text {
+          color: rgb(58, 163, 97);
+          font-size: 14px;
+        }
       }
     }
 

@@ -35,11 +35,11 @@ export async function deleteList(id, isHardDelete = false) {
 }
 
 // 获取 列表
-export async function getListLists() {
+export async function getListLists(billboardId) {
   await ListModel.connect()
 
   return ListModel.find(
-    { $or: [{ deleteTime: null }, { deleteTime: { $exists: false } }] },
+    { billboardId, $or: [{ deleteTime: null }, { deleteTime: { $exists: false } }] },
     { sort: ['order', 'createTime'] }
   ).then(lists => {
     return Promise.all(
