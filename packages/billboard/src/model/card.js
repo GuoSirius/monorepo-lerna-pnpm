@@ -68,8 +68,6 @@ export async function updateCardAffiliationAndOrder(lists) {
 
   lists = cloneDeep(lists)
 
-  console.log(lists)
-
   lists.forEach(item => {
     const { _id: listId, lists } = item
 

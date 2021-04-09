@@ -155,7 +155,7 @@ export default defineComponent({
 
     const activeCard = ref({})
     const billboardLists = ref([])
-    const recentMaturityLists = ref([{ name: 'demo' }])
+    const recentMaturityLists = ref([])
 
     const isVisibleForCard = ref(false)
     const isVisibleForBillboard = ref(false)

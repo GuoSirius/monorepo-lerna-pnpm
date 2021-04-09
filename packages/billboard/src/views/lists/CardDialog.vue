@@ -11,7 +11,7 @@
     @open="openHandler"
     @close="closeHandler"
   >
-    <el-form ref="form" :model="formModel" label-width="auto" @key.enter.stop.prevent="enterHandler">
+    <el-form ref="form" :model="formModel" label-width="auto" @keyup.enter.stop.prevent="enterHandler">
       <el-form-item label="卡片名称" prop="name">
         <el-input v-model="formModel.name" autofocus placeholder="请输入要新建的卡片名称" />
       </el-form-item>
