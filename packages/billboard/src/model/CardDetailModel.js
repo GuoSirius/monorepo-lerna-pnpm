@@ -7,6 +7,10 @@ export default class CardDetailModel extends CamoModel {
     this.scheme()
   }
 
+  static collectionName() {
+    return 'card-detail'
+  }
+
   scheme() {
     super.schema({
       billboardId: {

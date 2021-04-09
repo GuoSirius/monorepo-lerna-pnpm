@@ -7,6 +7,10 @@ export default class BillboardModel extends CamoModel {
     this.scheme()
   }
 
+  static collectionName() {
+    return 'billboard'
+  }
+
   scheme() {
     super.schema({
       name: {

@@ -7,6 +7,10 @@ export default class ListModel extends CamoModel {
     this.scheme()
   }
 
+  static collectionName() {
+    return 'list'
+  }
+
   scheme() {
     super.schema({
       billboardId: {
