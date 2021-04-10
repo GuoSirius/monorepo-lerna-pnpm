@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@electron/remote": "^1.1.0",
+    "@tinymce/tinymce-vue": "^4.0.0",
     "animate.css": "^4.1.1",
     "better-scroll": "^2.2.1",
     "camo": "^0.12.3",
@@ -44,6 +45,7 @@
     "reset-css": "^5.0.1",
     "sortablejs": "^1.13.0",
     "swiper": "^6.5.5",
+    "tinymce": "^5.7.1",
     "vue": "^3.0.9",
     "vue-router": "^4.0.5",
     "vuedraggable": "^4.0.1",
