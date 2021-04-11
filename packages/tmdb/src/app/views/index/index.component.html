@@ -1,1 +1,45 @@
-<p>index works!</p>
+<!-- Currently Playing start -->
+<section *ngIf="currentltPlayingLists?.length" class="currently-playing mt-1 mb-5">
+  <ngb-carousel [interval]="CURRENTLY_PLAYING_INTERVAL" [pauseOnHover]="true" [pauseOnFocus]="true">
+    <ng-template ngbSlide *ngFor="let item of currentltPlayingLists" id="{{ item.id }}">
+      <div class="currently-playing-item" (click)="clickCurrentlyPlayingHandler(item)">
+        <div class="carousel-caption px-3">
+          <h3>{{ item.name }}</h3>
+        </div>
+
+        <div class="picsum-img-wrapper">
+          <img [src]="item.backdrop_path" [alt]="item.name" class="currently-playing-image" />
+        </div>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</section>
+<!-- Currently Playing end -->
+
+<!-- Coutinue Watching start -->
+<app-carousel *ngIf="continueWatchingLists?.length" title="Coutinue Watching" [lists]="continueWatchingLists" customClasses="section"></app-carousel>
+<!-- Coutinue Watching end -->
+
+<!-- Popular Movies start -->
+<app-carousel *ngIf="popularMovieLists?.length" title="Popular Movies" mediaType="movie" [lists]="popularMovieLists" customClasses="section"></app-carousel>
+<!-- Popular Movies end -->
+
+<!-- Top Rated Movies start -->
+<app-carousel *ngIf="topRatedMovieLists?.length" title="Top Rated Movies" mediaType="movie" [lists]="topRatedMovieLists" customClasses="section"></app-carousel>
+<!-- Top Rated Movies end -->
+
+<!-- Trending Movies start -->
+<app-carousel *ngIf="trendingMovieLists?.length" title="Trending Movies" mediaType="movie" [lists]="trendingMovieLists" customClasses="section"></app-carousel>
+<!-- Trending Movies end -->
+
+<!-- Popular TV Shows start -->
+<app-carousel *ngIf="popularTVShowLists?.length" title="Popular TV Shows" mediaType="tv" [lists]="popularTVShowLists" customClasses="section"></app-carousel>
+<!-- Popular TV Shows end -->
+
+<!-- Top Rated TV Shows start -->
+<app-carousel *ngIf="topRatedTVShowLists?.length" title="Top Rated TV Shows" mediaType="tv" [lists]="topRatedTVShowLists" customClasses="section"></app-carousel>
+<!-- Top Rated TV Shows end -->
+
+<!-- Trending TV shows start -->
+<app-carousel *ngIf="trendingTVShowLists?.length" title="Trending TV shows" mediaType="tv" [lists]="trendingTVShowLists" customClasses="section"></app-carousel>
+<!-- Trending TV shows end -->

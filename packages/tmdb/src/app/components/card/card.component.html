@@ -1,0 +1,11 @@
+<div *ngIf="isVirtual; else content" class="card card-virtual" [class]="customClasses"></div>
+
+<ng-template #content>
+  <div class="card" [class]="customClasses" (click)="clickHandler($event)">
+    <img [src]="imageUrl" class="card-img-top" alt="{{ title }}" />
+
+    <div *ngIf="title" class="card-body pt-2 pb-1 px-2">
+      <h5 class="card-title">{{ title }}</h5>
+    </div>
+  </div>
+</ng-template>

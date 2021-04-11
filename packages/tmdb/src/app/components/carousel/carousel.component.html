@@ -1,0 +1,11 @@
+<section class="carousel" [class]="customClasses">
+  <h2 class="carousel-title">{{ title }}</h2>
+
+  <ngb-carousel *ngIf="lists?.length" [interval]="interval" [pauseOnHover]="true" [pauseOnFocus]="true">
+    <ng-template ngbSlide *ngFor="let subLists of chunkedLists; index as index" id="{{ index }}">
+      <div class="carousel-sub-lists">
+        <app-card *ngFor="let item of subLists" [id]="item.id" [title]="item.name" [mediaType]="item.media_type || mediaType" [imageUrl]="item.backdrop_path" [isVirtual]="item.isVirtual" (clicked)="clickedHandler($event)"></app-card>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</section>

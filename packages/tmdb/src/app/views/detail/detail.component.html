@@ -1,1 +1,9 @@
 <p>detail works!</p>
+
+<!-- Recommended Movies/ TV shows start -->
+<app-carousel *ngIf="recommendedLists?.length" title="Recommended Movies" [mediaType]="mediaType" [lists]="recommendedLists"></app-carousel>
+<!-- Recommended Movies/ TV shows end -->
+
+<!-- Similar Movies/TV shows start -->
+<app-carousel *ngIf="similarLists?.length" title="Similar Movies" [mediaType]="mediaType" [lists]="similarLists"></app-carousel>
+<!-- Similar Movies/TV shows end -->

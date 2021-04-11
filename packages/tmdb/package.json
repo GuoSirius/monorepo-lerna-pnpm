@@ -11,7 +11,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "tmdb": "nodemon ./lib/tmdb.js",
+    "server": "nodemon ./lib/server.js"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +28,12 @@
     "@angular/router": "~11.2.9",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "bootstrap": "^4.5.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
+    "store2": "^2.12.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
@@ -35,8 +42,11 @@
     "@angular/cli": "~11.2.8",
     "@angular/compiler-cli": "~11.2.9",
     "@types/jasmine": "~3.6.0",
+    "@types/lodash": "^4.14.168",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.1.0",
@@ -44,6 +54,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "nodemon": "^2.0.7",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",

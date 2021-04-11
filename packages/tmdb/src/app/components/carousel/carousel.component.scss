@@ -1,0 +1,36 @@
+.carousel {
+  margin-bottom: 5rem;
+
+  &-title {
+    margin-bottom: 2rem;
+  }
+
+  &-sub-lists {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ::ng-deep .carousel {
+
+    &-item {}
+
+    &-indicators {
+      bottom: -48px;
+    }
+
+    &-control-prev,
+    &-control-next {
+      width: 8%;
+    }
+
+    &-control-prev {
+      transform: translateX(-100%);
+    }
+
+    &-control-next {
+      transform: translateX(100%);
+    }
+  }
+}

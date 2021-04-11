@@ -1,9 +1,10 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RequestService {
 
-  constructor() { }
+  constructor(protected httpClient: HttpClient, protected httpParams: HttpParams) {}
 }

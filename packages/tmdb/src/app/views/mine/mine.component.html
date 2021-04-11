@@ -1,1 +1,11 @@
-<p>mine works!</p>
+<section *ngIf="watchLists; else empty" class="mine">
+  <h2 class="title mb-5">My WatchList</h2>
+
+  <div class="main">
+    <app-card class="item" title="This is test!"></app-card>
+  </div>
+</section>
+
+<ng-template #empty>
+  <p class="empty">No items found in Watchlist.</p>
+</ng-template>

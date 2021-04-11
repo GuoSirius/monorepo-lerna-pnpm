@@ -1,0 +1,1 @@
+export const CURRENTLY_PLAYING_INTERVAL = 3000;

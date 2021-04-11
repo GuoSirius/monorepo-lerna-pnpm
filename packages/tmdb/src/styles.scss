@@ -2,3 +2,26 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #aaaaac;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: #101133;
+  -webkit-box-shadow: inset 0 0 5px rgba(45, 49, 84, 0.8);
+}
