@@ -1,0 +1,83 @@
+.detail {
+  margin-bottom: 48px;
+}
+
+.cast-crew {
+  margin-bottom: 48px;
+
+  &-title {
+    margin-bottom: 24px;
+  }
+
+  &-main {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &-lists {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  &-item {
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  .card {
+    width: 12rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s linear 0s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &-title {
+      color: black;
+    }
+
+    &-text {
+      color: #999;
+    }
+  }
+}
+
+.review {
+  margin-bottom: 48px;
+
+  &-title {
+    margin-bottom: 24px;
+  }
+
+  &-item {
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &-avatar {
+    width: 120px;
+    border-radius: 50%;
+  }
+
+  &-author {}
+
+  &-created-time {}
+
+  &-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow : hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-link {
+    text-decoration: underline;
+  }
+}

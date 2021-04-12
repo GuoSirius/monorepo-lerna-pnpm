@@ -25,7 +25,7 @@ export class CardComponent implements OnInit {
   public clickHandler(e: Event): void {
     const { id, title, imageUrl, mediaType, clicked } = this;
 
-    const item = { id, name: title, backdrop_path: imageUrl, media_type: mediaType, title, imageUrl, mediaType };
+    const item = { id, name: title, poster_path: imageUrl, backdrop_path: imageUrl, media_type: mediaType, title, imageUrl, mediaType };
 
     clicked.emit(item as ISelectedTVMovie);
   }

@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ detail?.name }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeHandler('dismiss')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="media">
+    <img [src]="avatarUrl" class="mr-3 avatar" [alt]="detail?.name" />
+
+    <div class="media-body">
+      <p>
+        <span>Birth: </span>
+        <span>{{ detail?.birthday }}</span>
+      </p>
+      <p>
+        <span>Birth Place: </span>
+        <span>{{ detail?.place_of_birth }}</span>
+      </p>
+      <p>
+        <span>Gender: </span>
+        <span>{{ detail?.gender }}</span>
+      </p>
+      <p>
+        <span>Known for: </span>
+        <span>{{ detail?.known_for_department }}</span>
+      </p>
+      <p>
+        <span>Also Known as: </span>
+        <span>{{ detail?.also_known_as }}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="profile mt-3">
+    <h3 class="mb-3">Biography</h3>
+    <p>{{ detail?.biography }}</p>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="closeHandler()">Close</button>
+</div>

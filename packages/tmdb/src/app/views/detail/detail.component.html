@@ -1,9 +1,84 @@
-<p>detail works!</p>
+<div *ngIf="detail" class="detail">
+  <div class="media mb-3">
+    <div class="mr-3 detail-player col-5"></div>
+
+    <div class="media-body">
+      <h2 class="mt-0">{{ detail.name }}</h2>
+      <p>{{ detail.tagline }}</p>
+      <p>
+        <span>{{ detail.release_date }}</span>
+        <span>{{ detail.genres }}</span>
+      </p>
+      <p>
+        <span>Spoken Languages:</span>
+        <span>{{ detail.spoken_languages }}</span>
+      </p>
+
+      <button type="button" class="btn btn-primary" (click)="addRemoveHandler()">{{ buttonText }}</button>
+
+      <ngb-alert *ngIf="alertMessage" class="mt-3" [type]="alertType" (close)="alertCloseHandler()">{{ alertMessage }}</ngb-alert>
+    </div>
+  </div>
+
+  <div class="detail-description">
+    <h3>Description</h3>
+    <p>{{ detail.overview }}</p>
+  </div>
+</div>
+
+<!-- Cast And Crew start -->
+<section *ngIf="castCrewLists?.length" class="cast-crew">
+  <h2 class="cast-crew-title">Full Cast and Crew</h2>
+
+  <div class="cast-crew-main">
+    <ul class="cast-crew-lists list-unstyled">
+      <li *ngFor="let item of castCrewLists" class="cast-crew-item">
+        <div class="card" (click)="castCrewClickedHandler(item)">
+          <img [src]="item.profile_path" class="card-img-top" [alt]="item.name" />
+
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <h5 class="card-title">AS</h5>
+            <p class="card-text">{{ item.character }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<!-- Cast And Crew end -->
+
+<!-- Reviews start -->
+<section *ngIf="reviewLists?.length" class="review">
+  <h2 class="review-title">Reviews <span>{{ reviewLists.length }}</span></h2>
+
+  <div class="review-main">
+    <ul class="review-lists list-unstyled">
+      <li *ngFor="let item of reviewLists" class="review-item">
+        <div class="media">
+          <img [src]="item.avatar_path" class="mr-3 review-avatar" [alt]="item.author" />
+
+          <div class="media-body">
+            <h5 class="mt-0 mb-1 review-author">
+              A review created by {{ item.author }} <span class="badge badge-pill badge-dark">{{ item.rating }}</span>
+            </h5>
+
+            <p class="review-created-time">Written by {{ item.author }} on {{ item.created_at }}</p>
+            <p class="review-content">{{ item.content }}</p>
+
+            <a [href]="item.url" target="_blank" class="review-link">Read the rest</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<!-- Reviews end -->
 
 <!-- Recommended Movies/ TV shows start -->
-<app-carousel *ngIf="recommendedLists?.length" title="Recommended Movies" [mediaType]="mediaType" [lists]="recommendedLists"></app-carousel>
+<app-carousel *ngIf="recommendedLists?.length" [title]="recommendedTitle" [mediaType]="mediaType" [lists]="recommendedLists"></app-carousel>
 <!-- Recommended Movies/ TV shows end -->
 
 <!-- Similar Movies/TV shows start -->
-<app-carousel *ngIf="similarLists?.length" title="Similar Movies" [mediaType]="mediaType" [lists]="similarLists"></app-carousel>
+<app-carousel *ngIf="similarLists?.length" [title]="similarTitle" [mediaType]="mediaType" [lists]="similarLists"></app-carousel>
 <!-- Similar Movies/TV shows end -->

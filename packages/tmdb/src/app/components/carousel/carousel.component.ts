@@ -3,7 +3,7 @@ import chunk from 'lodash/chunk';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ISelectedTVMovie, ITVMovie, MediaType } from '@/app/interface/ITVMovie';
+import { ImageFieldType, ISelectedTVMovie, ITVMovie, MediaType } from '@/app/interface/ITVMovie';
 
 import { StorageService } from '@/app/service/storage.service';
 
@@ -17,6 +17,7 @@ export class CarouselComponent implements OnChanges {
   @Input() public title = 'Title';
   @Input() public lists!: ITVMovie[];
   @Input() public interval = 3000000;
+  @Input() public imageField: ImageFieldType = 'poster_path';
   @Input() public mediaType: MediaType = 'movie';
   @Input() public needAdd = true;
   @Input() public needNavigate = true;
@@ -40,7 +41,7 @@ export class CarouselComponent implements OnChanges {
     if (lastChunk) {
       Array.from({ length: chunkCount - lastChunk.length }).forEach(() => {
         lastChunk.push({ isVirtual: true });
-      })
+      });
     }
 
     this.chunkedLists = chunkedLists as ITVMovie[][];

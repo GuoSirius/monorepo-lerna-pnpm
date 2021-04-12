@@ -21,7 +21,7 @@ app.get('/search', (req, res) => {
 
   const url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}`
 
-  request(url, (error, result, resultText, buffer) => {
+  request(url, (error, result) => {
     if (error) return void res.end(error.message)
 
     res.json(result)
@@ -48,6 +48,9 @@ function request(url, callback) {
           const result = JSON.parse(resultText)
 
           callback(null, result, resultText, buffer)
+        })
+        .on('error', error => {
+          callback(error)
         })
     })
     .on('error', error => {

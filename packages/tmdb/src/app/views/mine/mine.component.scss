@@ -3,3 +3,13 @@
   text-align: center;
   font-size: 36px;
 }
+
+.main {
+  display: flex;
+  align-items: center;
+  align-content: center;
+
+  ::ng-deep .item {
+    margin: 0 36px 36px 0;
+  }
+}
