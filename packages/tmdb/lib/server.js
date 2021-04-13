@@ -26,7 +26,7 @@ function searchMulti(name,httpres){
             if(obj){
                 for(var i = 0; i < obj.results.length && i < 7;i++){
                     var name = '';
-                    if(!obj.result[i]) continue;
+                    if(!obj.results[i]) continue;
                     if(obj.results[i].media_type == 'tv'){
                         name = obj.results[i].name;
                     }else if(obj.results[i].media_type == 'movie'){
@@ -62,7 +62,7 @@ function search(httpres,baseurl,flag){
                 var j= 0;
                 var end = (baseurl == 'https://api.themoviedb.org/3/movie/now_playing') ? 5 : obj.results.length;
                 for(var i = 0;i < obj.results.length && j < end;i++){
-                    if(!result[i]) {continue;}
+                    if(!obj.results[i]) {continue;}
                     if(obj.results[i].backdrop_path){
                         var name = '';
                         if(flag){
@@ -106,7 +106,7 @@ function searchVideo(httpres,baseurl,flag){
             obj = JSON.parse(html);
             if(obj && obj.results){
                 var i= 0;
-                if(!result[i]) {return};
+                if(!obj.results[i]) { httpres.json({res:result}); return};
                 if(obj.results[i] && obj.results[i].type){
                     result={'site':obj.results[i].site,'name':obj.results[i].name,'key':obj.results[i].key,'type':obj.results[i].type};
                 }else{
@@ -532,7 +532,7 @@ app.get('/castexternal/', function (req, res) {
     }
 })
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 // const PORT = 8080;
 var server = app.listen(PORT, function () {
     var host = server.address().address

@@ -5,6 +5,8 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of, OperatorFunction } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
+import { USERNAEM } from './config';
+
 import { ITVMovie } from './interface/ITVMovie';
 
 import { IndexService } from './service/index.service';
@@ -17,6 +19,7 @@ import { StorageService } from './service/storage.service';
   providers: [IndexService, StorageService],
 })
 export class AppComponent {
+  public USERNAEM = USERNAEM;
   public keywords: any;
   public searching = false;
   public searchFailed = false;
