@@ -117,7 +117,7 @@ export class DetailComponent implements OnInit {
   }
 
   // 提示框 关闭
-  public alertCloseHandler(): void {
+  public alertClosedHandler(): void {
     this.alertType = '';
     this.alertMessage = '';
   }

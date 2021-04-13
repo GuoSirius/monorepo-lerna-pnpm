@@ -29,4 +29,5 @@ export const DEFAULT_PLAYER_INFORMATION = {
   site: 'YouTube',
   name: 'NotFount -- Custom',
   key: DEFAULT_YOUTUBE_VIDEO_URL,
+  videoId: DEFAULT_YOUTUBE_PLAYER_ID,
 };

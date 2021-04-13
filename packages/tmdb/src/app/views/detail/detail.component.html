@@ -1,6 +1,8 @@
 <div *ngIf="detail" class="detail">
   <div class="media mb-3">
-    <div class="mr-3 detail-player col-5"></div>
+    <div class="mr-3 detail-player col-5">
+      <app-player *ngIf="playerInformation" [playerInformation]="playerInformation"></app-player>
+    </div>
 
     <div class="media-body">
       <h2 class="mt-0">{{ detail.name }}</h2>
@@ -16,7 +18,7 @@
 
       <button type="button" class="btn btn-primary" (click)="addRemoveHandler()">{{ buttonText }}</button>
 
-      <ngb-alert *ngIf="alertMessage" class="mt-3" [type]="alertType" (close)="alertCloseHandler()">{{ alertMessage }}</ngb-alert>
+      <ngb-alert *ngIf="alertMessage" class="mt-3" [type]="alertType" (closed)="alertClosedHandler()">{{ alertMessage }}</ngb-alert>
     </div>
   </div>
 

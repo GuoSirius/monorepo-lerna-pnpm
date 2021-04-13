@@ -3,6 +3,7 @@ export interface IPlayerInformation {
   name: string;
   key: string;
   type: string;
+  videoId: string;
 }
 
 export interface ITVMovieDetail {
