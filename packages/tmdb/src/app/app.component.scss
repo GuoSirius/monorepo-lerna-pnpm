@@ -70,5 +70,13 @@
     }
   }
 
-  .container {}
+  .container {
+    min-height: calc(100% - 56px);
+  }
+
+  .footer {
+    color: #FFF;
+    font-size: 18px;
+    text-align: center;
+  }
 }

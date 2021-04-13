@@ -12,12 +12,12 @@ let apiLoaded = false;
 export class PlayerComponent implements OnInit {
   @Input() public playerInformation!: IPlayerInformation;
 
-  public videoId = ''
+  public videoId = '';
 
   constructor() {}
 
   public ngOnInit(): void {
-    this.getViedoId();
+    this.getVideoId();
 
     this.initialziePlayer();
   }
@@ -36,10 +36,10 @@ export class PlayerComponent implements OnInit {
   }
 
   // 获取 视频 ID
-  public getViedoId(): void {
+  public getVideoId(): void {
     const { playerInformation } = this;
-    const { videoId } = playerInformation;
+    const { key, videoId } = playerInformation;
 
-    this.videoId = videoId
+    this.videoId = key || videoId;
   }
 }

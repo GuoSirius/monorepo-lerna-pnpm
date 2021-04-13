@@ -14,9 +14,9 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/mylist">My List</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <!-- <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/watch/movie/751394">Movie@751394</a>
-        </li>
+        </li> -->
       </ul>
       <form class="form-inline my-2 my-lg-0">
 
@@ -37,11 +37,11 @@
     <div class="main-container">
       <div class="container">
         <router-outlet></router-outlet>
-
-        <footer style="display: none">
-          <p>Powered by TMDB. Developed by ShuKai</p>
-        </footer>
       </div>
+
+      <footer class="footer">
+        <p>Powered by TMDB. Developed by ShuKai</p>
+      </footer>
     </div>
   </main>
 </div>

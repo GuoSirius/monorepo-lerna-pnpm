@@ -1,24 +1,29 @@
 <div *ngIf="detail" class="detail">
   <div class="media mb-3">
-    <div class="mr-3 detail-player col-5">
+    <div class="mr-3 detail-player">
       <app-player *ngIf="playerInformation" [playerInformation]="playerInformation"></app-player>
     </div>
 
     <div class="media-body">
-      <h2 class="mt-0">{{ detail.name }}</h2>
-      <p>{{ detail.tagline }}</p>
-      <p>
+      <h2 class="mt-0 detail-name">{{ detail.name }}</h2>
+      <p class="detail-tagline">{{ detail.tagline }}</p>
+      <p class="detail-synthesis">
         <span>{{ detail.release_date }}</span>
-        <span>{{ detail.genres }}</span>
+        <span><i class="fa fa-star"></i>{{ detail.vote_average }}</span>
+        <span>{{ detail.episode_run_time }}</span>
       </p>
-      <p>
-        <span>Spoken Languages:</span>
-        <span>{{ detail.spoken_languages }}</span>
+      <p class="detail-genres">
+        <span>Genres: </span>
+        <span class="ml-1">{{ detail.genres }}</span>
+      </p>
+      <p class="detail-language">
+        <span>Spoken Languages: </span>
+        <span class="ml-1">{{ detail.spoken_languages }}</span>
       </p>
 
       <button type="button" class="btn btn-primary" (click)="addRemoveHandler()">{{ buttonText }}</button>
 
-      <ngb-alert *ngIf="alertMessage" class="mt-3" [type]="alertType" (closed)="alertClosedHandler()">{{ alertMessage }}</ngb-alert>
+      <ngb-alert #selfClosingAlert *ngIf="alertMessage" class="mt-3" [type]="alertType" (closed)="alertClosedHandler()">{{ alertMessage }}</ngb-alert>
     </div>
   </div>
 

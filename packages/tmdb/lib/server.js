@@ -26,6 +26,7 @@ function searchMulti(name,httpres){
             if(obj){
                 for(var i = 0; i < obj.results.length && i < 7;i++){
                     var name = '';
+                    if(!obj.result[i]) continue;
                     if(obj.results[i].media_type == 'tv'){
                         name = obj.results[i].name;
                     }else if(obj.results[i].media_type == 'movie'){
@@ -61,6 +62,7 @@ function search(httpres,baseurl,flag){
                 var j= 0;
                 var end = (baseurl == 'https://api.themoviedb.org/3/movie/now_playing') ? 5 : obj.results.length;
                 for(var i = 0;i < obj.results.length && j < end;i++){
+                    if(!result[i]) {continue;}
                     if(obj.results[i].backdrop_path){
                         var name = '';
                         if(flag){
@@ -104,10 +106,11 @@ function searchVideo(httpres,baseurl,flag){
             obj = JSON.parse(html);
             if(obj && obj.results){
                 var i= 0;
-                if(obj.results[i].type){
-                    result={'site':obj.results[i].site,'name':obj.results[i].name,'key':'https://www.youtube.com/watch?v='+obj.results[i].key,'type':obj.results[i].type};
+                if(!result[i]) {return};
+                if(obj.results[i] && obj.results[i].type){
+                    result={'site':obj.results[i].site,'name':obj.results[i].name,'key':obj.results[i].key,'type':obj.results[i].type};
                 }else{
-                    result={'site':obj.results[i].site,'name':obj.results[i].name,'key':'https://www.youtube.com/watch?v='+'tzkWB85ULJY','type':null};
+                    result={'site':obj.results[i].site,'name':obj.results[i].name,'key':'tzkWB85ULJY','type':null};
                 }
             }
             httpres.json({res:result});
@@ -260,6 +263,7 @@ function searchCastDetail(httpres,baseurl,flag){
                 result['known_for_department'] = obj.known_for_department;
                 result['biography'] = obj.biography;
                 result['place_of_birth'] = obj.place_of_birth;
+                result['profile_path'] = 'https://image.tmdb.org/t/p/w500'+obj.profile_path;
             }
             httpres.json({res:result});
         });
@@ -295,137 +299,237 @@ function searchCastExternal(httpres,baseurl,flag){
 
 // 搜索框查询 http://localhost:8080/search?keyword=game
 app.get('/search/', function (req, res) {
-    searchMulti(req.query['keyword'],res)
+    try{
+        searchMulti(req.query['keyword'],res);
+    }catch (e){
+        console.log(e);
+    }
 })
 
 // 最上面的第一个轮播图推荐 5张电影图 http://localhost:8080/topmv/
 app.get('/topmv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/movie/now_playing',true)
+    try{
+        search(res,'https://api.themoviedb.org/3/movie/now_playing',true);
+    }catch (e){
+        console.log(e);
+    }
 })
 
 // 高评分的电影轮播图 http://localhost:8080/topratemv/
 app.get('/topratemv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/movie/top_rated',true)
+    try{
+        search(res,'https://api.themoviedb.org/3/movie/top_rated',true)
+    }catch(e){
+        console.log(e);
+    }
+
 })
 // 趋势电影轮播图 http://localhost:8080/trendmv/
 app.get('/trendmv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/trending/movie/day',true)
+    try{
+        search(res,'https://api.themoviedb.org/3/trending/movie/day',true)
+    }catch (e){
+        console.log(e);
+    }
+
 })
 // 流行电影轮播图 http://localhost:8080/popularmv/
 app.get('/popularmv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/movie/popular',true)
+    try{
+        search(res,'https://api.themoviedb.org/3/movie/popular',true);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据一个电影的mvid来查找跟其相似的电影 http://localhost:8080/similarmv?id=399566
 app.get('/similarmv/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/similar';
-    search(res,baseurl,true)
+    try{
+        var mvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/similar';
+        search(res,baseurl,true)
+    }catch (e){
+        console.log(e);
+    }
+
 })
 
 // 根据一个电影的mvid来推荐电影 http://localhost:8080/recommendmv?id=399566
 app.get('/recommendmv/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/recommendations';
-    search(res,baseurl,true)
+    try{
+        var mvid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/recommendations';
+        search(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据一个mvid来查找电影信息，包括链接 http://localhost:8080/mv?id=464052
 app.get('/mv/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/videos';
-    searchVideo(res,baseurl,true)
+    try{
+            var mvid = req.query['id'];
+            var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/videos';
+            searchVideo(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据电影id来查找电影的细节 http://localhost:8080/mvdetails?id=464052
 app.get('/mvdetails/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid;
-    searchDetail(res,baseurl,true)
+    try{
+        var mvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid;
+        searchDetail(res,baseurl,true);
+    }catch (e){
+        console.log(e);
+    }
+
 })
 
 // 根据电影id来查找电影的评论 http://localhost:8080/mvreviews?id=464052
 app.get('/mvreviews/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/reviews';
-    searchReview(res,baseurl,true)
+    try{
+        var mvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/reviews';
+        searchReview(res,baseurl,true)
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据电影id来查找cast http://localhost:8080/mvcast?id=464052
 app.get('/mvcast/', function (req, res) {
-    var mvid = req.query['id'];
-    var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/credits';
-    searchCast(res,baseurl,true);
+    try{
+        var mvid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/movie/' + mvid + '/credits';
+        searchCast(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 高评分的电视轮播图 http://localhost:8080/topratetv/
 app.get('/topratetv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/tv/top_rated',false)
+    try{
+        search(res,'https://api.themoviedb.org/3/tv/top_rated',false)
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 趋势电视轮播图 http://localhost:8080/trendtv/
 app.get('/trendtv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/trending/tv/day',false)
+    try{
+        search(res,'https://api.themoviedb.org/3/trending/tv/day',false);
+    }catch{
+        console.log(e);
+    }
 })
 // 流行电视轮播图 http://localhost:8080/populartv/
 app.get('/populartv/', function (req, res) {
-    search(res,'https://api.themoviedb.org/3/tv/popular',false)
+    try{
+        search(res,'https://api.themoviedb.org/3/tv/popular',false);
+    }catch(e){
+        console.log(e);
+    }
 })
 
 // 根据一个电视的id来查找跟其相似的电影 http://localhost:8080/similartv?id=85271
 app.get('/similartv/', function (req, res) {
-    var tvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/similar';
-    search(res,baseurl,false)
+    try{
+        var tvid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/similar';
+        search(res,baseurl,false);
+    }catch (e){
+        console.log(e);
+    }
 })
 
 // 根据一个电视的id来推荐电影 http://localhost:8080/recommendtv?id=85271
 app.get('/recommendtv/', function (req, res) {
-    var tvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/recommendations';
-    search(res,baseurl,false)
+    try{
+        var tvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/recommendations';
+        search(res,baseurl,false);
+    }catch (e){
+        console.log(e);
+    }
 })
 
 // 根据一个tvid来查电视的视频，包括链接 http://localhost:8080/tv?id=85271
 app.get('/tv/', function (req, res) {
-    var tvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/videos';
-    searchVideo(res,baseurl,false)
+    try{
+        var tvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/videos';
+        searchVideo(res,baseurl,false);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据电视id来查找电视的细节 http://localhost:8080/tvdetails?id=85271
 app.get('/tvdetails/', function (req, res) {
-    var tvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid;
-    searchDetail(res,baseurl,false)
+    try{
+        var tvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid;
+        searchDetail(res,baseurl,false);
+    }catch(e){
+        console.log(e);
+    }
+
 })
 
 // 根据电视id来查找电视的评论 http://localhost:8080/tvreviews?id=85271
 app.get('/tvreviews/', function (req, res) {
-    var mvid = req.query['id']
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + mvid + '/reviews';
-    searchReview(res,baseurl,true)
+    try{
+        var mvid = req.query['id']
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + mvid + '/reviews';
+        searchReview(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
 })
 
 // 根据电视id来查找cast http://localhost:8080/tvcast?id=85271
 app.get('/tvcast/', function (req, res) {
-    var tvid = req.query['id'];
-    var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/credits';
-    searchCast(res,baseurl,true);
+    try{
+        var tvid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/tv/' + tvid + '/credits';
+        searchCast(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
 })
 
 // 根据演员id来查找cast http://localhost:8080/castdetail?id=550843
 app.get('/castdetail/', function (req, res) {
-    var castid = req.query['id'];
-    var baseurl = 'https://api.themoviedb.org/3/person/' + castid;
-    searchCastDetail(res,baseurl,true);
+    try{
+        var castid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/person/' + castid;
+        searchCastDetail(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
 })
 
 // 根据演员id来查找cast http://localhost:8080/castexternal?id=550843
 app.get('/castexternal/', function (req, res) {
-    var castid = req.query['id'];
-    var baseurl = 'https://api.themoviedb.org/3/person/' + castid +'/external_ids';
-    searchCastExternal(res,baseurl,true);
+    try{
+        var castid = req.query['id'];
+        var baseurl = 'https://api.themoviedb.org/3/person/' + castid +'/external_ids';
+        searchCastExternal(res,baseurl,true);
+    }catch(e){
+        console.log(e);
+    }
 })
 
 const PORT = process.env.PORT || 3000;

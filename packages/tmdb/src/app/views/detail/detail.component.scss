@@ -1,5 +1,48 @@
 .detail {
   margin-bottom: 48px;
+
+  &-player {
+    width: 640px;
+  }
+
+  .media-body {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  &-name {}
+
+  &-tagline {
+    color: #c5c3c3;
+  }
+
+  &-synthesis {
+    color: #c5c3c3;
+
+    span {
+
+      &:not(:first-child) {
+        margin-left: 0.8rem;
+      }
+
+      &:not(:last-child) {
+        padding-right: 0.8rem;
+        border-right: 1px solid #c5c3c3;
+      }
+
+      i {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  &-genres,
+  &-language {
+
+    span:last-child {
+      color: #948e8e;
+    }
+  }
 }
 
 .cast-crew {

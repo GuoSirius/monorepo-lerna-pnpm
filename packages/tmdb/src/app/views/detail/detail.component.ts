@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { ICastCrew, IPlayerInformation, IReview, ITVMovieDetail } from '@/app/interface/ITVMoveDetail';
 import { ITVMovie, MediaType } from '@/app/interface/ITVMovie';
@@ -17,6 +20,8 @@ import { CastCrewModalComponent } from '@/app/components/cast-crew-modal/cast-cr
   providers: [DetailService, StorageService],
 })
 export class DetailComponent implements OnInit {
+  private messageSubject = new Subject<string>();
+
   public playerInformation!: IPlayerInformation;
   public detail!: ITVMovieDetail;
   public reviewLists: IReview[] = [];
@@ -31,6 +36,8 @@ export class DetailComponent implements OnInit {
   public id!: number;
   public alertType = '';
   public alertMessage = '';
+
+  @ViewChild( 'selfClosingAlert', { static: true } ) public selfClosingAlert!: NgbAlert;
 
   constructor(
     private detailApi: DetailService,
@@ -50,6 +57,7 @@ export class DetailComponent implements OnInit {
 
       this.setAttribute(mediaType);
       this.switchButtonStatus(id);
+      this.initializeMessageSubject();
 
       this.getPlayerInformation(id, mediaType);
       this.getDetail(id, mediaType);
@@ -101,19 +109,42 @@ export class DetailComponent implements OnInit {
     this.showMessage();
   }
 
+  // 初始化 消息目标
+  public initializeMessageSubject(): void {
+    const { messageSubject } = this;
+
+    messageSubject.subscribe((type) => {
+      this.alertType = type;
+
+      if (type === 'success') {
+        this.alertMessage = 'Added to watchlist';
+      } else {
+        this.alertMessage = 'Removed to watchlist';
+      }
+    });
+
+    messageSubject.pipe(debounceTime(5000)).subscribe(() => {
+      const { selfClosingAlert } = this;
+
+      if (!selfClosingAlert) {
+        return;
+      }
+
+      selfClosingAlert.close();
+    });
+  }
+
   // 消息提示
   public showMessage(): void {
-    const { hasAdded } = this;
+    const { hasAdded, messageSubject } = this;
 
     if (hasAdded) {
-      this.alertType = 'success';
-      this.alertMessage = 'Added to watchlist';
+      messageSubject.next('success');
 
       return;
     }
 
-    this.alertType = 'danger';
-    this.alertMessage = 'Removed to watchlist';
+    messageSubject.next('danger');
   }
 
   // 提示框 关闭
@@ -128,8 +159,6 @@ export class DetailComponent implements OnInit {
     const { id, profile_path } = item;
 
     const modalRef = modalService.open(CastCrewModalComponent, { size: 'xl', scrollable: true });
-
-    // modalRef.scrolla
 
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.avatarUrl = profile_path;
