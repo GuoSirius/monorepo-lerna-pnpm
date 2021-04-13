@@ -17,7 +17,7 @@ export class PlayerComponent implements OnInit {
   constructor() {}
 
   public ngOnInit(): void {
-    this.getVideoId();
+    this.getViedoId();
 
     this.initialziePlayer();
   }
@@ -36,7 +36,7 @@ export class PlayerComponent implements OnInit {
   }
 
   // 获取 视频 ID
-  public function getViedoId(): void {
+  public getViedoId(): void {
     const { playerInformation } = this;
     const { videoId } = playerInformation;
 
