@@ -18,7 +18,7 @@ export class DetailService {
   constructor(private httpClient: HttpClient) {}
 
   // MoviePlayerInformation
-  public getMoviePlayerInformation(id: number, path = 'mv'): Observable<IPlayerInformation> {
+  public getMoviePlayerInformation(id: number, path = '/mv'): Observable<IPlayerInformation> {
     return this.getRecommendedMoviesLists<IPlayerInformation>(id, path).pipe(
       filter((item) => {
         console.log('filter', item);
