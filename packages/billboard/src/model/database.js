@@ -4,8 +4,6 @@ import { ensureFileSync } from 'fs-extra'
 import { app } from '@electron/remote'
 
 import NeDB from 'nedb'
-import lowDB from 'lowdb'
-import FileSync from 'lowdb/adapters/FileSync'
 
 import { connect } from 'camo'
 
@@ -21,24 +19,15 @@ export const USER_DATA_PATH = app.getPath('userData')
 
 export const DATABASE_PATH = path.resolve(USER_DATA_PATH, 'database')
 
-export function createTable(filename, useLowDB = false, useODM = true) {
+export function createTable(filename, useODM = true) {
   let table = null
 
   filename = path.join(DATABASE_PATH, `${filename}.json`)
 
   ensureFileSync(filename)
 
-  if (useLowDB) {
-    const adapter = new FileSync(filename)
-    table = lowDB(adapter)
-  } else {
-    if (useODM) table = connect(`nedb://${filename}`)
-    else table = new NeDB({ ...NEDB_OPTIONS, filename })
-  }
+  if (useODM) table = connect(`nedb://${filename}`)
+  else table = new NeDB({ ...NEDB_OPTIONS, filename })
 
   return Promise.resolve(table)
-}
-
-export function selectTable(...rest) {
-  return createTable(...rest)
 }

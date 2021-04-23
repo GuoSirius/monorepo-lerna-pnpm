@@ -98,7 +98,9 @@
 
                       <ul class="main-actions">
                         <li class="main-action" @click.stop="deleteCardHandler(element)">删除卡片</li>
-                        <li class="main-action" @click.stop="completeCardHandler(element)">完成卡片</li>
+                        <li class="main-action" @click.stop="completeCardHandler(element)">
+                          {{ element.isCompleted ? '取消完成' : '完成卡片' }}
+                        </li>
                       </ul>
                     </el-popover>
                   </li>
@@ -399,11 +401,13 @@ export default defineComponent({
         .catch(error => console.log(error))
     },
     completeCardHandler(card) {
-      const { _id } = card
+      const { _id, isCompleted } = card
 
-      changeCardStatusById(_id)
+      const message = isCompleted ? '成功取消卡片完成状态' : '卡片已完成'
+
+      changeCardStatusById(_id, !isCompleted)
         .then(() => {
-          this.$message.success('卡片已完成')
+          this.$message.success(message)
           this.getCardLists()
         })
         .catch(error => this.$message.error(error.message))
